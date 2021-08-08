@@ -3,5 +3,6 @@
 
 void view_etudiants();
 void add_etudiant();
+void delate_etudiant();
 
 #endif

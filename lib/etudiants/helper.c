@@ -104,3 +104,34 @@ void add_etudiant()
 	save_etudiant(&et);
 	print_etudiant(et);
 }
+
+void delate_etudiant()
+{
+	printf("***Modification d'un etudiant***\n");
+	unsigned int entier = 0, bad = 0;
+	char chaine[31];
+
+	printf("Entrer l'email de l'etudiant a Supprimer : ");
+	GRAB_EMAIL_ETUDIANT_DELATE:
+	scanf("%s", chaine);
+	fflush(stdin);
+
+	if(strcmp(chaine, "0") == 0) return;
+
+	Etudiant find = find_etudiant_with_email(chaine);
+	if(find.numero != 0){
+		print_etudiant(find);
+		printf("Etes vous sure de bien vouloir supprimer cet etudiant [o/N]? ");
+	}else{
+		printf("Cet email n'existe pas. Entrer un email svp ou 0 pour retourner : ");
+		goto GRAB_EMAIL_ETUDIANT_DELATE;
+	}
+
+	scanf("%s", chaine);
+	if(strcmp(chaine, "o") == 0 || strcmp(chaine, "O") == 0){
+		update_etudiant(find, 0);
+		printf("\nL'etudiant a ete supprimer avec succes.\n");
+	}else{
+		printf("\nL'etudiant n'a pas ete supprimer.\n");
+	}
+}

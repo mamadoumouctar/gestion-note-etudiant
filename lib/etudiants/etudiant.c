@@ -91,6 +91,67 @@ void save_etudiant(Etudiant *et)
 	fprintf(file, "%d\n", et->naissance.aaaa);
 }
 
+/**
+ * Fonction qui permet de supprimer ou de modifier un etudiant
+ * si edit_or_delate est 0 on supprime
+ * si edit_or_delate est 1 on modifie
+*/
+void update_etudiant(Etudiant update, unsigned short int edit_or_update)
+{
+	FILE *file = NULL, *tmp = NULL;
+	Etudiant et;
+
+	file = fopen("./data/etudiants.csv", "r");
+	tmp  = fopen("./data/tmp.csv", "a");
+
+	if(file == NULL || tmp == NULL){
+		printf("L'ouverture du fichier a echoue.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	do{
+		fscanf(file, "%d ,%s ,%s ,%s ,%d/%d/%d\n", &et.numero, et.nom, et.prenom, et.email, &et.naissance.jj, &et.naissance.mm, &et.naissance.aaaa);
+
+		if(update.numero == et.numero){
+			if(edit_or_update){
+				fprintf(tmp, "%d ,%s ,%s ,%s ,", update.numero, update.nom, update.prenom, update.email);
+
+				if(update.naissance.jj < 10)
+					fprintf(tmp, "0%d/", update.naissance.jj);
+				else
+					fprintf(tmp, "%d/", update.naissance.jj);
+
+				if(update.naissance.mm < 10)
+					fprintf(tmp, "0%d/", update.naissance.mm);
+				else
+					fprintf(tmp, "%d/", update.naissance.mm);
+
+				fprintf(tmp, "%d\n", update.naissance.aaaa);
+			}
+		}else{
+			fprintf(tmp, "%d ,%s ,%s ,%s ,", et.numero, et.nom, et.prenom, et.email);
+
+			if(et.naissance.jj < 10)
+				fprintf(tmp, "0%d/", et.naissance.jj);
+			else
+				fprintf(tmp, "%d/", et.naissance.jj);
+
+			if(et.naissance.mm < 10)
+				fprintf(tmp, "0%d/", et.naissance.mm);
+			else
+				fprintf(tmp, "%d/", et.naissance.mm);
+
+			fprintf(tmp, "%d\n", et.naissance.aaaa);
+		}
+	}while(!feof(file));
+
+	fclose(file);
+	fclose(tmp);
+
+	remove("./data/etudiants.csv");
+	rename("./data/tmp.csv", "./data/etudiants.csv");
+}
+
 void print_etudiant(Etudiant et)
 {
 	printf("+-----------------------------------------------+\n");

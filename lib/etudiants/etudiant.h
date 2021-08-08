@@ -22,6 +22,7 @@ int get_last_numero_etudiant();
 Etudiant find_etudiant_with_email(char *);
 
 void save_etudiant(Etudiant *et);
+void update_etudiant(Etudiant , unsigned short int);
 void print_etudiant(Etudiant);
 
 #endif
