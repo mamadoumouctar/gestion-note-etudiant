@@ -18,6 +18,78 @@ Etudiant new_etudiant(
 	return et;
 }
 
+Date new_date(unsigned short int jj, unsigned short int mm, unsigned int aaaa)
+{
+	Date date;
+	date.jj = jj;
+	date.mm = mm;
+	date.aaaa = aaaa;
+	return date;
+}
+
+int get_last_numero_etudiant()
+{
+	Etudiant et;
+	FILE *file = fopen("./data/etudiants.csv", "r");
+
+	if(file == NULL){
+		printf("L'ouverture du fichier a echoue.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	do{
+		fscanf(file, "%d ,%s ,%s ,%s ,%d/%d/%d\n", &et.numero, et.nom, et.prenom, et.email, &et.naissance.jj, &et.naissance.mm, &et.naissance.aaaa);
+	}while(!feof(file));
+	fclose(file);
+	return et.numero;
+}
+
+Etudiant find_etudiant_with_email(char email[21])
+{
+	Etudiant et;
+	FILE *file = fopen("./data/etudiants.csv", "r");
+
+	if(file == NULL){
+		printf("L'ouverture du fichier a echoue.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	do{
+		fscanf(file, "%d ,%s ,%s ,%s ,%d/%d/%d\n", &et.numero, et.nom, et.prenom, et.email, &et.naissance.jj, &et.naissance.mm, &et.naissance.aaaa);
+		if(strcmp(et.email, email) == 0){
+			fclose(file);
+			return et;
+		}
+	}while(!feof(file));
+	fclose(file);
+	Date date = {0, 0, 0};
+	return new_etudiant(0, "", "", "", date);
+}
+
+void save_etudiant(Etudiant *et)
+{
+	FILE *file = fopen("./data/etudiants.csv", "a");
+
+	if(file == NULL){
+		printf("L'ouverture du fichier a echoue.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	et->numero = get_last_numero_etudiant() + 1;
+	fprintf(file, "%d ,%s ,%s ,%s ,", et->numero, et->nom, et->prenom, et->email);
+
+	if(et->naissance.jj < 10)
+		fprintf(file, "0%d/", et->naissance.jj);
+	else
+		fprintf(file, "%d/", et->naissance.jj);
+
+	if(et->naissance.mm < 10)
+		fprintf(file, "0%d/", et->naissance.mm);
+	else
+		fprintf(file, "%d/", et->naissance.mm);
+
+	fprintf(file, "%d\n", et->naissance.aaaa);
+}
 
 void print_etudiant(Etudiant et)
 {

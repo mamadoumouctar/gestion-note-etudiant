@@ -48,6 +48,9 @@ void gestion_etudiants()
 		case 1:
 		view_etudiants();
 		break;
+		case 2:
+		add_etudiant();
+		break;
 		default:
 		printf("L'option saisie n'est pas disponible");
 		exit(1);

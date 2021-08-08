@@ -16,7 +16,12 @@ typedef struct Etudiant{
 } Etudiant;
 
 Etudiant new_etudiant(unsigned int, char *, char *, char *, Date);
+Date new_date(unsigned short int, unsigned short int, unsigned int);
 
+int get_last_numero_etudiant();
+Etudiant find_etudiant_with_email(char *);
+
+void save_etudiant(Etudiant *et);
 void print_etudiant(Etudiant);
 
 #endif
