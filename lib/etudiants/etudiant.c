@@ -38,7 +38,7 @@ int get_last_numero_etudiant()
 	}
 
 	do{
-		fscanf(file, "%d ,%s ,%s ,%s ,%d/%d/%d\n", &et.numero, et.nom, et.prenom, et.email, &et.naissance.jj, &et.naissance.mm, &et.naissance.aaaa);
+		fscanf(file, "%d,%[a-zA-Z ],%[a-zA-Z ],%[a-zA-Z@.],%d/%d/%d\n", &et.numero, et.nom, et.prenom, et.email, &et.naissance.jj, &et.naissance.mm, &et.naissance.aaaa);
 	}while(!feof(file));
 	fclose(file);
 	return et.numero;
@@ -55,7 +55,7 @@ Etudiant find_etudiant_with_email(char email[21])
 	}
 
 	do{
-		fscanf(file, "%d ,%s ,%s ,%s ,%d/%d/%d\n", &et.numero, et.nom, et.prenom, et.email, &et.naissance.jj, &et.naissance.mm, &et.naissance.aaaa);
+		fscanf(file, "%d,%[a-zA-Z ],%[a-zA-Z ],%[a-zA-Z@.],%d/%d/%d\n", &et.numero, et.nom, et.prenom, et.email, &et.naissance.jj, &et.naissance.mm, &et.naissance.aaaa);
 		if(strcmp(et.email, email) == 0){
 			fclose(file);
 			return et;
@@ -76,7 +76,7 @@ void save_etudiant(Etudiant *et)
 	}
 
 	et->numero = get_last_numero_etudiant() + 1;
-	fprintf(file, "%d ,%s ,%s ,%s ,", et->numero, et->nom, et->prenom, et->email);
+	fprintf(file, "%d,%s,%s,%s,", et->numero, et->nom, et->prenom, et->email);
 
 	if(et->naissance.jj < 10)
 		fprintf(file, "0%d/", et->naissance.jj);
@@ -110,11 +110,11 @@ void update_etudiant(Etudiant update, unsigned short int edit_or_update)
 	}
 
 	do{
-		fscanf(file, "%d ,%s ,%s ,%s ,%d/%d/%d\n", &et.numero, et.nom, et.prenom, et.email, &et.naissance.jj, &et.naissance.mm, &et.naissance.aaaa);
+		fscanf(file, "%d,%[a-zA-Z ],%[a-zA-Z ],%[a-zA-Z@.],%d/%d/%d\n", &et.numero, et.nom, et.prenom, et.email, &et.naissance.jj, &et.naissance.mm, &et.naissance.aaaa);
 
 		if(update.numero == et.numero){
 			if(edit_or_update){
-				fprintf(tmp, "%d ,%s ,%s ,%s ,", update.numero, update.nom, update.prenom, update.email);
+				fprintf(tmp, "%d,%s,%s,%s,", update.numero, update.nom, update.prenom, update.email);
 
 				if(update.naissance.jj < 10)
 					fprintf(tmp, "0%d/", update.naissance.jj);
@@ -129,7 +129,7 @@ void update_etudiant(Etudiant update, unsigned short int edit_or_update)
 				fprintf(tmp, "%d\n", update.naissance.aaaa);
 			}
 		}else{
-			fprintf(tmp, "%d ,%s ,%s ,%s ,", et.numero, et.nom, et.prenom, et.email);
+			fprintf(tmp, "%d,%s,%s,%s,", et.numero, et.nom, et.prenom, et.email);
 
 			if(et.naissance.jj < 10)
 				fprintf(tmp, "0%d/", et.naissance.jj);

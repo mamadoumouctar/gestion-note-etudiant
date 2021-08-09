@@ -15,7 +15,7 @@ void view_etudiants()
 		exit(EXIT_FAILURE);
 	}
 	do{
-		fscanf(file, "%d ,%s ,%s ,%s ,%d/%d/%d\n", &et.numero, et.nom, et.prenom, et.email, &et.naissance.jj, &et.naissance.mm, &et.naissance.aaaa);
+		fscanf(file, "%d,%[a-zA-Z ],%[a-zA-Z ],%[a-zA-Z@.],%d/%d/%d\n", &et.numero, et.nom, et.prenom, et.email, &et.naissance.jj, &et.naissance.mm, &et.naissance.aaaa);
 		print_etudiant(et);
 	}while(!feof(file));
 	fclose(file);
@@ -35,14 +35,14 @@ void add_etudiant()
 			printf("Entrer le nom de l'etudiant : ");
 		else
 			printf("Incorrect le nom doit avoir au moin 3 carractere. entrer le nom : ");
-		scanf("%s", chaine);
+		scanf("%[a-zA-Z ]", chaine);
 		fflush(stdin);
 		bad = 1;
 		if(strlen(chaine) >= 3)
 			break;
 	}while(1);
 	strcpy(et.nom, chaine);
-	strcpy(chaine, "");
+	strcpy(chaine, "\0");
 	bad = 0;
 
 	//saisie du prenom
@@ -51,14 +51,14 @@ void add_etudiant()
 			printf("Entrer le prenom de l'etudiant : ");
 		else
 			printf("Incorrect le prenom doit avoir au moin 3 carractere. entrer le prenom : ");
-		scanf("%s", chaine);
+		scanf("%[a-zA-Z ]", chaine);
 		fflush(stdin);
 		bad = 1;
 		if(strlen(chaine) >= 3)
 			break;
 	}while(1);
 	strcpy(et.prenom, chaine);
-	strcpy(chaine, "");
+	strcpy(chaine, "\0");
 	bad = 0;
 
 	//saisie de l'email
@@ -81,7 +81,7 @@ void add_etudiant()
 		}
 	}while(1);
 	strcpy(et.email, chaine);
-	strcpy(chaine, "");
+	strcpy(chaine, "\0");
 	bad = 0;
 
 	//siasie de la date de naissance
@@ -163,7 +163,7 @@ void edit_etudiant()
 			printf("Entrer le nom de l'etudiant ou 0 pour ne pas modifier : ");
 		else
 			printf("Incorrect le nom doit avoir au moin 3 carractere. entrer le nom : ");
-		scanf("%s", chaine);
+		scanf("%[a-zA-Z ]", chaine);
 		fflush(stdin);
 		bad = 1;
 		if(strcmp(chaine, "0") == 0){
@@ -171,7 +171,7 @@ void edit_etudiant()
 		}else{
 			if(strlen(chaine) >= 3){
 				strcpy(find.nom, chaine);
-				strcpy(chaine, "");
+				strcpy(chaine, "\0");
 				break;
 			}
 		}
@@ -184,7 +184,7 @@ void edit_etudiant()
 			printf("Entrer le prenom de l'etudiant ou 0 pour ne pas modifier : ");
 		else
 			printf("Incorrect le prenom doit avoir au moin 3 carractere. entrer le prenom : ");
-		scanf("%s", chaine);
+		scanf("%[a-zA-Z ]", chaine);
 		fflush(stdin);
 		bad = 1;
 		if(strcmp(chaine, "0") == 0){
@@ -192,7 +192,7 @@ void edit_etudiant()
 		}else{
 			if(strlen(chaine) >= 3){
 				strcpy(find.prenom, chaine);
-				strcpy(chaine, "");
+				strcpy(chaine, "\0");
 				break;
 			}
 		}
@@ -216,7 +216,7 @@ void edit_etudiant()
 				Etudiant toBeUnique = find_etudiant_with_email(chaine);
 				if(toBeUnique.numero == 0 || toBeUnique.numero == find.numero){
 					strcpy(find.email, chaine);
-					strcpy(chaine, "");
+					strcpy(chaine, "\0");
 					break;
 				}else{
 					printf("Incorrect cet email existe deja chez un autre etudiant. entrer l'email svp : ");
