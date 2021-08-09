@@ -41,6 +41,7 @@ void gestion_etudiants()
 	printf("2. Ajouter un etudiant.\n");
 	printf("3. Modifier un etudiant.\n");
 	printf("4. Supprimer un etudiant.\n");
+	printf("5. Rechercher un etudiant.\n");
 
 	printf(": ");
 	scanf("%d", &clavier);
@@ -58,6 +59,9 @@ void gestion_etudiants()
 		break;
 		case 4:
 		delate_etudiant();
+		break;
+		case 5:
+		seach_etudiant();
 		break;
 		default:
 		printf("L'option saisie n'est pas disponible");

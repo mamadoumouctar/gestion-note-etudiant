@@ -3,8 +3,6 @@
 
 #include "classe.h"
 
-void print_classe();
-
 void view_classes();
 void add_classe();
 void update_classe();

@@ -39,6 +39,22 @@ int get_last_code_classe()
 	return bin.code;
 }
 
+void print_classe(Classe classe)
+{
+	printf("+-----------------------------------------------+\n");
+	printf("|\tCode : %-3d\t\t\t\t|\n", classe.code);
+	printf("+-----------------------------------------------+\n");
+	printf("|\tNom : %-30s\t|\n", classe.nom);
+	printf("+-----------------------------------------------+\n");
+	if(classe.niveau == LICENCE)
+		printf("|\tNiveau : LICENCE\t\t\t|\n");
+	else if(classe.niveau == MASTER)
+		printf("|\tNiveau : MASTER\t\t\t|\n");
+	else
+		printf("|\tNiveau : Inconnu\t\t\t|\n");
+	printf("+-----------------------------------------------+\n");
+}
+
 void save_classe()
 {
 	FILE *file;
@@ -171,4 +187,36 @@ int grab_nom_classe()
 int grab_niveau_classe()
 {
 	return scanf("%d", &cl.niveau), fflush(stdin), cl.niveau--;
+}
+
+Classe find_classe_from_etudiant(unsigned int code_classe)
+{
+	FILE *file = fopen("./data/classes.csv", "r");
+	Classe ret;
+	char niveau[8];
+
+	if(file == NULL){
+		printf("L'ouverture du fichier a echoue.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	do{
+		fscanf(file, "%d,%[a-zA-Z0-9 ],%s",&ret.code, ret.nom, niveau);
+		if(ret.code == code_classe){
+			fclose(file);
+			if(strcmp(niveau, "LICENCE") == 0)
+				ret.niveau = 0;
+			else if(strcmp(niveau, "MASTER") == 0)
+				ret.niveau = 1;
+			else
+				ret.niveau = -1;
+			return ret;
+		}
+	}while(!feof(file));
+	fclose(file);
+	ret.code = 0;
+	strcpy(ret.nom, "\0");
+	ret.niveau = LICENCE;
+
+	return ret;
 }

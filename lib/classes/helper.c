@@ -5,18 +5,6 @@
 
 int last = -1;
 
-void print_classe()
-{
-	//Classe cl = get_last_code_classe();
-	printf("+-----------------------------------------------+\n");
-	printf("|\tCode: %-3d\t\t\t\t|\n", get_code_classe());
-	printf("+-----------------------------------------------+\n");
-	printf("|\tNom: %-21s\t\t|\n", get_nom_classe());
-	printf("+-----------------------------------------------+\n");
-	printf("|\tNiveau: %s\t\t\t\t|\n", get_niveau_classe());
-	printf("+-----------------------------------------------+\n");
-}
-
 void view_classes()
 {
 	FILE *file;

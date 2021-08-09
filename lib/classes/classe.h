@@ -18,6 +18,8 @@ Classe new_classe();
 Classe new_classe_from_file(FILE *file);
 int get_last_code_classe();
 
+void print_classe(Classe);
+
 void save_classe();
 void save_update_classe(Classe);
 void save_delated_classe(Classe);
@@ -33,5 +35,7 @@ char * get_niveau_classe();
 
 int grab_nom_classe();
 int grab_niveau_classe();
+
+Classe find_classe_from_etudiant(unsigned int);
 
 #endif

@@ -3,6 +3,7 @@
 #include <string.h>
 #include "helper.h"
 #include "etudiant.h"
+#include "../classes/classe.h"
 
 void view_etudiants()
 {
@@ -257,4 +258,24 @@ void edit_etudiant()
 
 	update_etudiant(find, 1);
 	print_etudiant(find);
+}
+
+void seach_etudiant()
+{
+	printf("***Rechercher un etudiant***\n");
+	char chaine[21];
+
+	printf("Entrer l'email de l'etudiant a rechercher ou 0 pour retourner : ");
+	scanf("%[a-zA-Z0-9@.]", chaine);
+
+	Etudiant find = find_etudiant_with_email(chaine);
+	if(find.numero != 0){
+		printf("\n\tInformation sur l'etudiant:\n");
+		print_etudiant(find);
+		Classe cl = find_classe_from_etudiant(1);
+		printf("\n\tInformation sur sa classe:\n");
+		print_classe(cl);
+	}else{
+		printf("L'email entrer ne correspond a aucun etudiant\n");
+	}
 }
