@@ -9,9 +9,9 @@ void print_classe()
 {
 	//Classe cl = get_last_code_classe();
 	printf("+-----------------------------------------------+\n");
-	printf("|\tCode: %d\t\t\t\t|\n", get_code_classe());
+	printf("|\tCode: %-3d\t\t\t\t|\n", get_code_classe());
 	printf("+-----------------------------------------------+\n");
-	printf("|\tNom: %s\t\t\t\t|\n", get_nom_classe());
+	printf("|\tNom: %-21s\t\t|\n", get_nom_classe());
 	printf("+-----------------------------------------------+\n");
 	printf("|\tNiveau: %s\t\t\t\t|\n", get_niveau_classe());
 	printf("+-----------------------------------------------+\n");
@@ -35,9 +35,9 @@ void view_classes()
 		if(last == get_code_classe())
 			break;
 		printf("+-----------------------------------------------+\n");
-		printf("|\tCode: %3d\t\t\t\t|\n", get_code_classe());
+		printf("|\tCode: %-3d\t\t\t\t|\n", get_code_classe());
 		printf("+-----------------------------------------------+\n");
-		printf("|\tNom: %s\t\t\t\t|\n", get_nom_classe());
+		printf("|\tNom: %-21s\t\t|\n", get_nom_classe());
 		printf("+-----------------------------------------------+\n");
 		printf("|\tNiveau: %s\t\t\t\t|\n", get_niveau_classe());
 		printf("+-----------------------------------------------+\n");
@@ -94,25 +94,37 @@ void update_classe()
 	if(bad == 0){
 		bad = 1;
 		printf("Entrer le nom de la classe a modifier svp : ");
-		scanf("%s", nom);
+		scanf("%[a-zA-Z0-9 ]", nom);
 		fflush(stdin);
 	}else{
 		printf("Cette classe n'existe pas. entrer une classe existante svp : ");
-		scanf("%s", nom);
+		scanf("%[a-zA-Z0-9 ]", nom);
 		fflush(stdin);
 	}
 
 	Classe find = find_classe_with_nom(nom);
+	printf("+-----------------------------------------------+\n");
+	printf("|\tCode: %-3d\t\t\t\t|\n", find.code);
+	printf("+-----------------------------------------------+\n");
+	printf("|\tNom: %-21s\t\t|\n", find.nom);
+	printf("+-----------------------------------------------+\n");
+	if(find.niveau == LICENCE)
+		printf("|\tNiveau: LICENCE\t\t\t\t|\n");
+	else if(find.niveau == MASTER)
+		printf("|\tNiveau: MASTER\t\t\t\t|\n");
+	printf("+-----------------------------------------------+\n");
 	if(find.code == 0)
 		goto GRAB_NOM_CLASSE_EDIT;
 
 	printf("Entrer le nouveau nom ou 0 pour ne pas modifier : ");
-	scanf("%s", nom);
+	scanf("%[a-zA-Z0-9 ]", nom);
 	fflush(stdin);
 
 	if(strcmp(find.nom, nom) != 0 && strcmp(nom, "0") != 0)
 		strcpy(find.nom, nom);
 
+	printf("1. Pour LICENCE.\n");
+	printf("2. Pour MASTER.\n");
 	do{
 		printf("Entrer le nouveau niveau ou 0 pour ne pas modifier : ");
 		if(scanf("%d", &bad) == 1 && (bad == 0 || bad == 1 || bad == 2)){
@@ -124,11 +136,14 @@ void update_classe()
 	find.niveau = (bad-- == 0) ? find.niveau : bad;
 
 	printf("+-----------------------------------------------+\n");
-	printf("|\tCode: %d\t\t\t\t|\n", find.code);
+	printf("|\tCode: %-2d\t\t\t\t|\n", find.code);
 	printf("+-----------------------------------------------+\n");
 	printf("|\tNom: %s\t\t\t\t|\n", find.nom);
 	printf("+-----------------------------------------------+\n");
-	printf("|\tNiveau: %d\t\t\t\t|\n", find.niveau);
+	if(find.niveau == LICENCE)
+		printf("|\tNiveau: LICENCE\t\t\t\t|\n", find.niveau);
+	else if(find.niveau == MASTER)
+		printf("|\tNiveau: MASTER\t\t\t\t|\n", find.niveau);
 	printf("+-----------------------------------------------+\n");
 
 	save_update_classe(find);
@@ -145,11 +160,11 @@ void delate_classe()
 	if(bad == 0){
 		bad = 1;
 		printf("Entrer le nom de la classe a Supprimer svp : ");
-		scanf("%s", nom);
+		scanf("%[a-zA-Z ]", nom);
 		fflush(stdin);
 	}else{
 		printf("Cette classe n'existe pas. entrer une classe existante svp : ");
-		scanf("%s", nom);
+		scanf("%[a-zA-Z ]", nom);
 		fflush(stdin);
 	}
 
@@ -177,7 +192,7 @@ Classe find_classe_with_code(int code)
 	char niveau[8];
 
 	do{
-		fscanf(file, "%d ,%s ,%s", &cl.code, cl.nom, niveau);
+		fscanf(file, "%d,%[a-zA-Z ],%s", &cl.code, cl.nom, niveau);
 	}while(!feof(file));
 
 	fclose(file);
@@ -195,9 +210,10 @@ Classe find_classe_with_nom(char nom[31])
 
 	char niveau[9];
 	Classe cl = {0, "", LICENCE};
+	printf("pass %s\n", nom);
 
 	do{
-		fscanf(file, "%d ,%s ,%s\n", &cl.code, cl.nom, niveau);
+		fscanf(file, "%d,%[a-zA-Z0-9 ],%s\n", &cl.code, cl.nom, niveau);
 		if(strcmp(nom, cl.nom) == 0){
 			if(strcmp(niveau, "LICENCE") == 0)
 				cl.niveau = 0;

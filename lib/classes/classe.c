@@ -15,7 +15,7 @@ Classe new_classe()
 Classe new_classe_from_file(FILE *file)
 {
 	char niveau[8];
-	fscanf(file, "%d ,%s ,%s", &cl.code, cl.nom, niveau);
+	fscanf(file, "%d,%[a-zA-Z0-9 ],%s", &cl.code, cl.nom, niveau);
 	set_niveau_classe_s(niveau);
 }
 
@@ -32,7 +32,7 @@ int get_last_code_classe()
 	}
 
 	do{
-		fscanf(file, "%d ,%s ,%s", &bin.code, bin.nom, niveau);
+		fscanf(file, "%d,%[a-zA-Z0-9 ],%s", &bin.code, bin.nom, niveau);
 	}while(!feof(file));
 
 	fclose(file);
@@ -50,7 +50,7 @@ void save_classe()
 	}
 	int last_code = get_last_code_classe() + 1;
 	set_code_classe(last_code);
-	fprintf(file, "%d ,%s ,%s\n", get_code_classe(), get_nom_classe(), get_niveau_classe());
+	fprintf(file, "%d,%s,%s\n", get_code_classe(), get_nom_classe(), get_niveau_classe());
 }
 
 void save_update_classe(Classe save)
@@ -68,11 +68,11 @@ void save_update_classe(Classe save)
 		exit(1);
 	}
 	do{
-		fscanf(file, "%d ,%s ,%s\n", &bin.code, bin.nom, niveau);
+		fscanf(file, "%d,%[a-zA-Z0-9 ],%s\n", &bin.code, bin.nom, niveau);
 		if(bin.code == save.code){
-			fprintf(tmp, "%d ,%s ,%s\n", save.code, save.nom, niveau);
+			fprintf(tmp, "%d,%s,%s\n", save.code, save.nom, niveau);
 		}else{
-			fprintf(tmp, "%d ,%s ,%s\n", bin.code, bin.nom, niveau);
+			fprintf(tmp, "%d,%s,%s\n", bin.code, bin.nom, niveau);
 		}
 	}while(!feof(file));
 	
@@ -98,9 +98,9 @@ void save_delated_classe(Classe save)
 		exit(1);
 	}
 	do{
-		fscanf(file, "%d ,%s ,%s\n", &bin.code, bin.nom, niveau);
+		fscanf(file, "%d,%[a-zA-Z0-9 ],%s\n", &bin.code, bin.nom, niveau);
 		if(bin.code != save.code){
-			fprintf(tmp, "%d ,%s ,%s\n", bin.code, bin.nom, niveau);
+			fprintf(tmp, "%d,%s,%s\n", bin.code, bin.nom, niveau);
 		}
 	}while(!feof(file));
 	
@@ -162,7 +162,7 @@ char * get_niveau_classe()
 int grab_nom_classe()
 {
 	unsigned short int ret = 0;
-	ret = scanf("%s", cl.nom);
+	ret = scanf("%[a-zA-Z0-9 ]", cl.nom);
 	fflush(stdin);
 
 	return ret;
