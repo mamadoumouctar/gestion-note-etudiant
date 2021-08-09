@@ -16,7 +16,7 @@ void view_etudiants()
 		exit(EXIT_FAILURE);
 	}
 	do{
-		fscanf(file, "%d,%[a-zA-Z ],%[a-zA-Z ],%[a-zA-Z@.],%d/%d/%d\n", &et.numero, et.nom, et.prenom, et.email, &et.naissance.jj, &et.naissance.mm, &et.naissance.aaaa);
+		fscanf(file, "%d,%[a-zA-Z ],%[a-zA-Z ],%[a-zA-Z@.],%d/%d/%d,%d\n", &et.numero, et.nom, et.prenom, et.email, &et.naissance.jj, &et.naissance.mm, &et.naissance.aaaa, &et.code_classe);
 		print_etudiant(et);
 	}while(!feof(file));
 	fclose(file);
@@ -172,7 +172,7 @@ void edit_etudiant()
 		}else{
 			if(strlen(chaine) >= 3){
 				strcpy(find.nom, chaine);
-				strcpy(chaine, "\0");
+				strcpy(chaine, "");
 				break;
 			}
 		}
@@ -185,7 +185,9 @@ void edit_etudiant()
 			printf("Entrer le prenom de l'etudiant ou 0 pour ne pas modifier : ");
 		else
 			printf("Incorrect le prenom doit avoir au moin 3 carractere. entrer le prenom : ");
-		scanf("%[a-zA-Z ]", chaine);
+		//scanf("%[a-zA-Z ]", chaine);
+		gets(chaine);
+		printf("prenom %s\n", chaine);
 		fflush(stdin);
 		bad = 1;
 		if(strcmp(chaine, "0") == 0){
@@ -272,7 +274,7 @@ void seach_etudiant()
 	if(find.numero != 0){
 		printf("\n\tInformation sur l'etudiant:\n");
 		print_etudiant(find);
-		Classe cl = find_classe_from_etudiant(1);
+		Classe cl = find_classe_from_etudiant(find.code_classe);
 		printf("\n\tInformation sur sa classe:\n");
 		print_classe(cl);
 	}else{

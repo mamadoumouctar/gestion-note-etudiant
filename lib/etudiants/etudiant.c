@@ -38,7 +38,7 @@ int get_last_numero_etudiant()
 	}
 
 	do{
-		fscanf(file, "%d,%[a-zA-Z ],%[a-zA-Z ],%[a-zA-Z@.],%d/%d/%d\n", &et.numero, et.nom, et.prenom, et.email, &et.naissance.jj, &et.naissance.mm, &et.naissance.aaaa);
+		fscanf(file, "%d,%[a-zA-Z ],%[a-zA-Z ],%[a-zA-Z@.],%d/%d/%d,%d\n", &et.numero, et.nom, et.prenom, et.email, &et.naissance.jj, &et.naissance.mm, &et.naissance.aaaa, &et.code_classe);
 	}while(!feof(file));
 	fclose(file);
 	return et.numero;
@@ -55,7 +55,7 @@ Etudiant find_etudiant_with_email(char email[21])
 	}
 
 	do{
-		fscanf(file, "%d,%[a-zA-Z ],%[a-zA-Z ],%[a-zA-Z@.],%d/%d/%d\n", &et.numero, et.nom, et.prenom, et.email, &et.naissance.jj, &et.naissance.mm, &et.naissance.aaaa);
+		fscanf(file, "%d,%[a-zA-Z ],%[a-zA-Z ],%[a-zA-Z@.],%d/%d/%d,%d\n", &et.numero, et.nom, et.prenom, et.email, &et.naissance.jj, &et.naissance.mm, &et.naissance.aaaa, &et.code_classe);
 		if(strcmp(et.email, email) == 0){
 			fclose(file);
 			return et;
@@ -88,7 +88,9 @@ void save_etudiant(Etudiant *et)
 	else
 		fprintf(file, "%d/", et->naissance.mm);
 
-	fprintf(file, "%d\n", et->naissance.aaaa);
+	fprintf(file, "%d,%d\n", et->naissance.aaaa, et->code_classe);
+
+	fclose(file);
 }
 
 /**
@@ -110,7 +112,7 @@ void update_etudiant(Etudiant update, unsigned short int edit_or_update)
 	}
 
 	do{
-		fscanf(file, "%d,%[a-zA-Z ],%[a-zA-Z ],%[a-zA-Z@.],%d/%d/%d\n", &et.numero, et.nom, et.prenom, et.email, &et.naissance.jj, &et.naissance.mm, &et.naissance.aaaa);
+		fscanf(file, "%d,%[a-zA-Z ],%[a-zA-Z ],%[a-zA-Z@.],%d/%d/%d,%d\n", &et.numero, et.nom, et.prenom, et.email, &et.naissance.jj, &et.naissance.mm, &et.naissance.aaaa, &et.code_classe);
 
 		if(update.numero == et.numero){
 			if(edit_or_update){
@@ -126,7 +128,7 @@ void update_etudiant(Etudiant update, unsigned short int edit_or_update)
 				else
 					fprintf(tmp, "%d/", update.naissance.mm);
 
-				fprintf(tmp, "%d\n", update.naissance.aaaa);
+				fprintf(tmp, "%d,%d\n", update.naissance.aaaa, update.code_classe);
 			}
 		}else{
 			fprintf(tmp, "%d,%s,%s,%s,", et.numero, et.nom, et.prenom, et.email);
@@ -141,7 +143,7 @@ void update_etudiant(Etudiant update, unsigned short int edit_or_update)
 			else
 				fprintf(tmp, "%d/", et.naissance.mm);
 
-			fprintf(tmp, "%d\n", et.naissance.aaaa);
+			fprintf(tmp, "%d,%d\n", et.naissance.aaaa, et.code_classe);
 		}
 	}while(!feof(file));
 

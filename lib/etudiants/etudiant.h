@@ -1,6 +1,8 @@
 #ifndef ET_0
 #define ET_0
 
+#include "../classes/classe.h"
+
 typedef struct Date{
 	unsigned short int jj;
 	unsigned short int mm;
@@ -13,6 +15,7 @@ typedef struct Etudiant{
 	char prenom[21];
 	char email[21];
 	Date naissance;
+	int code_classe;
 } Etudiant;
 
 Etudiant new_etudiant(unsigned int, char *, char *, char *, Date);
