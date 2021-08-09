@@ -135,3 +135,126 @@ void delate_etudiant()
 		printf("\nL'etudiant n'a pas ete supprimer.\n");
 	}
 }
+
+void edit_etudiant()
+{
+	printf("***Modification d'un etudiant***\n");
+	char chaine[31];
+	unsigned short int bad = 0;
+
+	printf("Entrer l'email de l'etudiant a modifier : ");
+	GRAB_EMAIL_ETUDIANT_EDIT:
+	scanf("%s", chaine);
+	fflush(stdin);
+
+	if(strcmp(chaine, "0") == 0) return;
+
+	Etudiant find = find_etudiant_with_email(chaine);
+	if(find.numero != 0){
+		print_etudiant(find);
+	}else{
+		printf("Cet email n'existe pas. Entrer un email svp ou 0 pour retourner : ");
+		goto GRAB_EMAIL_ETUDIANT_EDIT;
+	}
+
+	//saisie du nom
+	do{
+		if(bad == 0)
+			printf("Entrer le nom de l'etudiant ou 0 pour ne pas modifier : ");
+		else
+			printf("Incorrect le nom doit avoir au moin 3 carractere. entrer le nom : ");
+		scanf("%s", chaine);
+		fflush(stdin);
+		bad = 1;
+		if(strcmp(chaine, "0") == 0){
+			break;
+		}else{
+			if(strlen(chaine) >= 3){
+				strcpy(find.nom, chaine);
+				strcpy(chaine, "");
+				break;
+			}
+		}
+	}while(1);
+	bad = 0;
+
+	//saisie du prenom
+	do{
+		if(bad == 0)
+			printf("Entrer le prenom de l'etudiant ou 0 pour ne pas modifier : ");
+		else
+			printf("Incorrect le prenom doit avoir au moin 3 carractere. entrer le prenom : ");
+		scanf("%s", chaine);
+		fflush(stdin);
+		bad = 1;
+		if(strcmp(chaine, "0") == 0){
+			break;
+		}else{
+			if(strlen(chaine) >= 3){
+				strcpy(find.prenom, chaine);
+				strcpy(chaine, "");
+				break;
+			}
+		}
+	}while(1);
+	bad = 0;
+
+	//saisie de email
+	do{
+		if(bad == 0)
+			printf("Entrer l'email de l'etudiant ou 0 pour ne pas modifier : ");
+		else
+			printf("Incorrect ceci n'est pas un email. entrer l'email : ");
+		GRAB_EMAIL_ETUDIANT_EDIT_VALIDATION:
+		scanf("%s", chaine);
+		fflush(stdin);
+		bad = 1;
+		if(strcmp(chaine, "0") == 0){
+			break;
+		}else{
+			if(strstr(chaine, "@") && strstr(chaine, ".") && strlen(chaine) >= 3){
+				Etudiant toBeUnique = find_etudiant_with_email(chaine);
+				if(toBeUnique.numero == 0 || toBeUnique.numero == find.numero){
+					strcpy(find.email, chaine);
+					strcpy(chaine, "");
+					break;
+				}else{
+					printf("Incorrect cet email existe deja chez un autre etudiant. entrer l'email svp : ");
+					goto GRAB_EMAIL_ETUDIANT_EDIT_VALIDATION;
+				}
+			}
+		}
+	}while(1);
+	bad = 0;
+
+	//saisie de la date de naisssance
+	do{
+		GRAB_NAISSANCE_ETUDIANT_EDIT:
+		if(bad == 0)
+			printf("Entrer la date de naissance sous le format jj/mm/aaaa ou 0 pour ne pas modifier : ");
+		else
+			printf("Incorrect ceci n'est pas une date de naissance : ");
+
+		Date naissance;
+
+		scanf("%2d/%2d/%4d", &naissance.jj, &naissance.mm, &naissance.aaaa);
+
+		if(naissance.jj == 0)
+			break;
+
+		if(
+			(naissance.jj < 0 || naissance.jj > 31) ||
+			(naissance.mm < 0 || naissance.mm > 12) ||
+			naissance.aaaa < 1945
+		){
+			bad = 1;
+			goto GRAB_NAISSANCE_ETUDIANT_EDIT;
+		}else{
+			find.naissance = naissance;
+			break;
+		}
+	}while(1);
+
+	update_etudiant(find, 1);
+	print_etudiant(find);
+}

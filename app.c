@@ -39,6 +39,7 @@ void gestion_etudiants()
 {
 	printf("1. Afficher tout les etudiants.\n");
 	printf("2. Ajouter un etudiant.\n");
+	printf("3. Modifier un etudiant.\n");
 	printf("4. Supprimer un etudiant.\n");
 
 	printf(": ");
@@ -51,6 +52,9 @@ void gestion_etudiants()
 		break;
 		case 2:
 		add_etudiant();
+		break;
+		case 3:
+		edit_etudiant();
 		break;
 		case 4:
 		delate_etudiant();
