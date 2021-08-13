@@ -8,5 +8,8 @@ typedef struct Matiere{
 } Matiere;
 
 void print_matiere(Matiere);
+void save_matiere(Matiere mat);
+
+int get_last_reference_matiere();
 
 #endif

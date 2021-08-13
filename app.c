@@ -129,6 +129,9 @@ void gestion_matieres()
 		case 1 :
 		view_matiere();
 		break;
+		case 2:
+		add_matiere();
+		break;
 		default:
 		printf("L'option saisie n'est pas disponible");
 		exit(1);
