@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "helper.h"
+#include "../etudiants/etudiant.h"
 
 int last = -1;
 
@@ -222,4 +223,36 @@ Classe find_classe_with_nom(char nom[31])
 	fclose(file);
 	cl.code = 0;
 	return cl;
+}
+
+void seach_classe()
+{
+	printf("***Rechercher une classe***\n");
+
+	char chaine[31];
+	Etudiant * etudiants;
+
+	printf("Entrer le nom de la classe a rechercher : ");
+	scanf("%[a-zA-Z0-9 ]", chaine);
+	fflush(stdin);
+	Classe find = find_classe_with_nom(chaine);
+
+	printf("------------Information sur la classe------------\n");
+	print_classe(find);
+
+	etudiants = malloc(sizeof(Etudiant) * 10);
+	int max = find_etudiant_from_classe(find.code, etudiants);
+
+	printf("\n---------Etudiants de la classe: %s---------\n", find.nom);
+	if(max == 0){
+		printf("Desole cette classe n'a pas encore d'etudiant.\n");
+		free(etudiants);
+		return;
+	}
+	for(unsigned int i = 0; i < max; i++)
+		print_etudiant(etudiants[i]);
+	free(etudiants);
+	return;
+
+	free(etudiants);
 }

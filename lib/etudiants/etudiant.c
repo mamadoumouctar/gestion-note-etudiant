@@ -66,6 +66,31 @@ Etudiant find_etudiant_with_email(char email[21])
 	return new_etudiant(0, "", "", "", date);
 }
 
+int find_etudiant_from_classe(unsigned int code_classe, Etudiant * etudiants)
+{
+	Etudiant et;
+	unsigned short int index = 0, max = 10;
+
+	FILE *file = fopen("./data/etudiants.csv", "r");
+
+	if(file == NULL){
+		printf("L'ouverture du fichier a echoue.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	do{
+		fscanf(file, "%d,%[a-zA-Z ],%[a-zA-Z ],%[a-zA-Z@.],%d/%d/%d,%d\n", &et.numero, et.nom, et.prenom, et.email, &et.naissance.jj, &et.naissance.mm, &et.naissance.aaaa, &et.code_classe);
+		if(et.code_classe == code_classe){
+			etudiants[index] = et;
+			index++;
+			if(index > max - 1) break;
+		}
+	}while(!feof(file));
+
+	fclose(file);
+	return index;
+}
+
 void save_etudiant(Etudiant *et)
 {
 	FILE *file = fopen("./data/etudiants.csv", "a");

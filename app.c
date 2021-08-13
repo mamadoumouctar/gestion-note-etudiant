@@ -76,6 +76,7 @@ void gestion_classes()
 	printf("2. Ajouter une classe.\n");
 	printf("3. Modifier une classe.\n");
 	printf("4. Supprimer une classe.\n");
+	printf("5. Rechercher une classe.\n");
 
 	printf(": ");
 	scanf("%d", &clavier);
@@ -94,6 +95,9 @@ void gestion_classes()
 		break;
 		case 4:
 		delate_classe();
+		break;
+		case 5:
+		seach_classe();
 		break;
 		default:
 		printf("L'option saisie n'est pas disponible");
