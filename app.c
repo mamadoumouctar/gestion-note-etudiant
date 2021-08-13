@@ -2,12 +2,14 @@
 #include <stdlib.h>
 #include "lib/classes/helper.h"
 #include "lib/etudiants/helper.h"
+#include "lib/matieres/helper.h"
 
 int clavier = 0;
 
 void clear();
 void gestion_etudiants();
 void gestion_classes();
+void gestion_matieres();
 
 int main(int argc, char const *argv[])
 {
@@ -15,6 +17,7 @@ int main(int argc, char const *argv[])
 
 	printf("1. Gestion d'etudiant.\n");
 	printf("2. Gestion de classe.\n");
+	printf("3. Gestion des matiers\n");
 
 	printf(": ");
 	scanf("%d", &clavier);
@@ -27,6 +30,9 @@ int main(int argc, char const *argv[])
 		break;
 		case 2:
 		gestion_classes();
+		break;
+		case 3:
+		gestion_matieres();
 		break;
 		default:
 		printf("L'option saisie n'est pas disponible.\n");
@@ -98,6 +104,30 @@ void gestion_classes()
 		break;
 		case 5:
 		seach_classe();
+		break;
+		default:
+		printf("L'option saisie n'est pas disponible");
+		exit(1);
+	}
+}
+
+void gestion_matieres()
+{
+	printf("\n***Gestion des matiers***\n\n");
+	printf("1. Afficher toute les matiers.\n");
+	printf("2. Ajouter une matier.\n");
+	printf("3. Modifier une matier.\n");
+	printf("4. Supprimer une matier.\n");
+	printf("5. Rechercher une matier.\n");
+
+	printf(": ");
+	scanf("%d", &clavier);
+	fflush(stdin);
+
+	clear();
+	switch(clavier){
+		case 1 :
+		view_matiere();
 		break;
 		default:
 		printf("L'option saisie n'est pas disponible");
