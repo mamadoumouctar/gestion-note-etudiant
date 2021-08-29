@@ -14,9 +14,15 @@ void view_matiere()
 		printf("L'ouverture du fichier a echoue.\n");
 		exit(EXIT_FAILURE);
 	}
+
+	printf("+-------------+------------------+---------------+\n");
+	printf("|  Reference  |     Libellet     |  Coefficient  |\n");
+	printf("+-------------+------------------+---------------+\n");
+
 	do{
 		fscanf(file, "%d,%[a-zA-Z ],%d\n", &mat.reference, mat.libelle, &mat.coefficient);
-		print_matiere(mat);
+		printf("|    %3d      |  %-16s|  %3d          |\n", mat.reference, mat.libelle, mat.coefficient);
+		printf("+-------------+------------------+---------------+\n");
 	}while(!feof(file));
 	fclose(file);
 }
