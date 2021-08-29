@@ -60,3 +60,51 @@ void add_matiere()
 
 	save_matiere(mat);
 }
+
+void edit_matiere()
+{
+	printf("***Modification d'une matiere***\n");
+	unsigned short int entier = 0, bad = 0;
+	char chaine[16];
+
+	printf("Entrer le libelle de la matiere a modifier : ");
+	GRAB_LIBELLE_EDIT:
+	scanf("%[a-zA-Z0-9 ]", chaine);
+	fflush(stdin);
+
+	Matiere find = get_one_matiere_with(chaine);
+	print_matiere(find);
+	printf("\n");
+
+	//Saisi du libelle
+	printf("Entrer le nouveau libelle ou 0 pour ne pas modifier : ");
+	GRAB_LIBELLE_EDIT_NEW:
+	scanf("%[a-zA-Z0-9 ]", chaine);
+	fflush(stdin);
+
+	if(strcmp(chaine, "0") != 0){
+		if(strlen(chaine) < 3){
+			printf("Incorrect le libelle doit avoir plus que 3 carractere. Entrer le libelle : ");
+			goto GRAB_LIBELLE_EDIT_NEW;
+		}
+		strcpy(find.libelle, chaine);
+	}
+
+	//Saisi du coefficient
+	printf("Entrer le coefficient ou 0 pour ne pas modifier : ");
+	GRAB_COEFICCIENT_EDIT_NEW:
+	bad = scanf("%d", &entier);
+	fflush(stdin);
+
+	if(entier != 0 && bad == 1){
+		find.coefficient = entier;
+	}else{	
+		if(entier != 0 || bad != 1){
+			printf("Incorrect ceci n'est pas un coefficient. Entrer le coefficient : ");
+			goto GRAB_COEFICCIENT_EDIT_NEW;
+		}
+	}
+
+	print_matiere(find);
+	update_matiere(find, 1);
+}

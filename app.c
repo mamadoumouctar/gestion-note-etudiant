@@ -132,6 +132,9 @@ void gestion_matieres()
 		case 2:
 		add_matiere();
 		break;
+		case 3:
+		edit_matiere();
+		break;
 		default:
 		printf("L'option saisie n'est pas disponible");
 		exit(1);
@@ -142,3 +145,4 @@ void clear()
 {
 	system("cls");
 }
+//gcc app.c lib/classes/classe.c lib/classes/helper.c lib/etudiants/etudiant.c lib/etudiants/helper.c lib/matieres/matiere.c lib/matieres/helper.c -o main
