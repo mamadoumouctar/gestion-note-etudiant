@@ -18,4 +18,6 @@ int get_last_reference_matiere();
 void find_matieres(char *, Matiere *);
 Matiere get_one_matiere_with(char *);
 
+void find_matieres_and_print(char *);
+
 #endif

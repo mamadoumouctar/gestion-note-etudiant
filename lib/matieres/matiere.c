@@ -165,3 +165,29 @@ Matiere get_one_matiere_with(char *libelle)
 		goto GRAB_MATIERE_ONCE;
 	}
 }
+
+void find_matieres_and_print(char *libelle)
+{
+	FILE *file = fopen("./data/matieres.csv", "r");
+	unsigned short int nomber = 0;
+	Matiere mat;
+
+	if(file == NULL){
+		printf("L'ouverture du fichier a echoue.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	do{
+		fscanf(file, "%d,%[a-zA-Z0-9 ],%d\n", &mat.reference, mat.libelle, &mat.coefficient);
+		if(strcmp(libelle, mat.libelle) == 0){
+			nomber = 1;
+			printf("|    %3d      |  %-16s|  %3d          |\n", mat.reference, mat.libelle, mat.coefficient);
+			printf("+-------------+------------------+---------------+\n");
+		}
+	}while(!feof(file));
+	fclose(file);
+	if(nomber == 0){
+		printf("|  Desole cet libelle n'existe pas...            |\n");
+		printf("+------------------------------------------------+\n");
+	}
+}

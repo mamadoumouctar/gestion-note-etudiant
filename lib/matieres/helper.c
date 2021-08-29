@@ -149,3 +149,20 @@ void delate_matiere()
 		printf("\nLa matiere n'a pas ete supprimer.\n");
 	}
 }
+
+void seach_matiere()
+{
+	printf("***Seach Matiere***\n");
+	unsigned int entier = 0, bad = 0;
+	char chaine[31];
+
+	printf("Entrer le libelle libelle de la matiere a rechercher : ");
+	scanf("%s", chaine);
+	fflush(stdin);
+	printf("\n");
+
+	printf("+-------------+------------------+---------------+\n");
+	printf("|  Reference  |     Libellet     |  Coefficient  |\n");
+	printf("+-------------+------------------+---------------+\n");
+	find_matieres_and_print(chaine);
+}

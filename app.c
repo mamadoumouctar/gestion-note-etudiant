@@ -138,6 +138,9 @@ void gestion_matieres()
 		case 4:
 		delate_matiere();
 		break;
+		case 5:
+		seach_matiere();
+		break;
 		default:
 		printf("L'option saisie n'est pas disponible");
 		exit(1);
