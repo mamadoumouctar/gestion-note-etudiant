@@ -72,9 +72,17 @@ void edit_matiere()
 	scanf("%[a-zA-Z0-9 ]", chaine);
 	fflush(stdin);
 
+	if(strcmp(chaine, "0") == 0)
+		return;
+
 	Matiere find = get_one_matiere_with(chaine);
-	print_matiere(find);
-	printf("\n");
+
+	if(find.reference != 0){
+		print_matiere(find);
+	}else{
+		printf("Cet libelle n'existe pas. Entrer un libelle svp ou 0 pour retourner : ");
+		goto GRAB_LIBELLE_EDIT;
+	}
 
 	//Saisi du libelle
 	printf("Entrer le nouveau libelle ou 0 pour ne pas modifier : ");
