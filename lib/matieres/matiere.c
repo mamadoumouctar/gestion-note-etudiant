@@ -132,7 +132,7 @@ void find_matieres(char *libelle, Matiere *matieres)
 
 Matiere get_one_matiere_with(char *libelle)
 {
-	Matiere *matieres, mat;
+	Matiere *matieres, mat, null = {0, "",0};
 	unsigned int index, entier = 0;
 
 	index = get_nomber_of_matiere_with(libelle);
@@ -142,6 +142,8 @@ Matiere get_one_matiere_with(char *libelle)
 
 	if(index == 1)
 		return matieres[0];
+	else if(index == 0)
+		return null;
 
 	printf("+----+---------------+------------------------+-----------------+\n");
 	printf("| N  |   Reference   |        Libelle         |   Coefficient   |\n");
