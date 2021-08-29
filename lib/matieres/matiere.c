@@ -66,8 +66,6 @@ void update_matiere(Matiere update, unsigned short int edit_or_update)
 		exit(EXIT_FAILURE);
 	}
 
-	printf("%s\n", update.libelle);
-
 	do{
 		fscanf(file, "%d,%[a-zA-Z0-9 ],%d\n", &mat.reference, mat.libelle, &mat.coefficient);
 

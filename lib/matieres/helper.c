@@ -108,3 +108,36 @@ void edit_matiere()
 	print_matiere(find);
 	update_matiere(find, 1);
 }
+
+void delate_matiere()
+{
+	printf("***Modification d'une matiere***\n");
+	unsigned int entier = 0, bad = 0;
+	char chaine[31];
+
+
+	printf("Entrer le libelle de la matiere a Supprimer : ");
+	GRAB_LIBELLET_MATIERE_DELATE:
+	scanf("%s", chaine);
+	fflush(stdin);
+
+	if(strcmp(chaine, "0") == 0) return;
+
+	Matiere find = get_one_matiere_with(chaine);
+
+	if(find.reference != 0){
+		print_matiere(find);
+		printf("Etes vous sure de bien vouloir supprimer cette matiere [o/N]? ");
+	}else{
+		printf("Cet libelle n'existe pas. Entrer un libelle svp ou 0 pour retourner : ");
+		goto GRAB_LIBELLET_MATIERE_DELATE;
+	}
+
+	scanf("%s", chaine);
+	if(strcmp(chaine, "o") == 0 || strcmp(chaine, "O") == 0){
+		update_matiere(find, 0);
+		printf("\nLa matiere a ete supprimer avec succes.\n");
+	}else{
+		printf("\nLa matiere n'a pas ete supprimer.\n");
+	}
+}
