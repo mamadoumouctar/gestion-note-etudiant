@@ -15,9 +15,29 @@ void view_etudiants()
 		printf("L'ouverture du fichier a echoue.\n");
 		exit(EXIT_FAILURE);
 	}
+
+	printf("+--------+-------------------------------+---------------------+---------------------+-------------------+\n");
+	printf("| Numero |  Nom                          | Prenom              | Email               | Date de naissance |\n");
+	printf("+--------+-------------------------------+---------------------+---------------------+-------------------+\n");
+
 	do{
 		fscanf(file, "%d,%[a-zA-Z ],%[a-zA-Z ],%[a-zA-Z@.],%d/%d/%d,%d\n", &et.numero, et.nom, et.prenom, et.email, &et.naissance.jj, &et.naissance.mm, &et.naissance.aaaa, &et.code_classe);
-		print_etudiant(et);
+
+		printf("|  %3d   | %-30s| %-20s| %-20s| ", et.numero, et.nom, et.prenom, et.email);
+		if(et.naissance.jj < 10)
+			printf("0%1d", et.naissance.jj);
+		else
+			printf("%2d", et.naissance.jj);
+
+		printf("/");
+
+		if(et.naissance.mm < 10)
+			printf("0%1d", et.naissance.mm);
+		else
+			printf("%2d", et.naissance.mm);
+
+		printf("/%4d        |\n", et.naissance.aaaa);
+		printf("+--------+-------------------------------+---------------------+---------------------+-------------------+\n");
 	}while(!feof(file));
 	fclose(file);
 }
