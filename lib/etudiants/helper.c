@@ -56,7 +56,7 @@ void add_etudiant()
 			printf("Entrer le nom de l'etudiant : ");
 		else
 			printf("Incorrect le nom doit avoir au moin 3 carractere. entrer le nom : ");
-		scanf("%[a-zA-Z ]", chaine);
+		scanf("%30[a-zA-Z ]", chaine);
 		fflush(stdin);
 		bad = 1;
 		if(strlen(chaine) >= 3)
@@ -72,7 +72,7 @@ void add_etudiant()
 			printf("Entrer le prenom de l'etudiant : ");
 		else
 			printf("Incorrect le prenom doit avoir au moin 3 carractere. entrer le prenom : ");
-		scanf("%[a-zA-Z ]", chaine);
+		scanf("%20[a-zA-Z ]", chaine);
 		fflush(stdin);
 		bad = 1;
 		if(strlen(chaine) >= 3)
@@ -89,7 +89,7 @@ void add_etudiant()
 		else
 			printf("Incorrect ceci n'est pas un email. entrer l'email : ");
 		GRAB_EMAIL_ETUDIANT_ADD:
-		scanf("%s", chaine);
+		scanf("%20s", chaine);
 		fflush(stdin);
 		bad = 1;
 		if(strstr(chaine, "@") && strstr(chaine, ".")){
@@ -134,7 +134,7 @@ void delate_etudiant()
 
 	printf("Entrer l'email de l'etudiant a Supprimer : ");
 	GRAB_EMAIL_ETUDIANT_DELATE:
-	scanf("%s", chaine);
+	scanf("%20s", chaine);
 	fflush(stdin);
 
 	if(strcmp(chaine, "0") == 0) return;
@@ -148,7 +148,7 @@ void delate_etudiant()
 		goto GRAB_EMAIL_ETUDIANT_DELATE;
 	}
 
-	scanf("%s", chaine);
+	scanf("%20s", chaine);
 	if(strcmp(chaine, "o") == 0 || strcmp(chaine, "O") == 0){
 		update_etudiant(find, 0);
 		printf("\nL'etudiant a ete supprimer avec succes.\n");
@@ -165,7 +165,7 @@ void edit_etudiant()
 
 	printf("Entrer l'email de l'etudiant a modifier : ");
 	GRAB_EMAIL_ETUDIANT_EDIT:
-	scanf("%s", chaine);
+	scanf("%20s", chaine);
 	fflush(stdin);
 
 	if(strcmp(chaine, "0") == 0) return;
@@ -184,7 +184,7 @@ void edit_etudiant()
 			printf("Entrer le nom de l'etudiant ou 0 pour ne pas modifier : ");
 		else
 			printf("Incorrect le nom doit avoir au moin 3 carractere. entrer le nom : ");
-		scanf("%[a-zA-Z ]", chaine);
+		scanf("%30[a-zA-Z ]", chaine);
 		fflush(stdin);
 		bad = 1;
 		if(strcmp(chaine, "0") == 0){
@@ -205,9 +205,8 @@ void edit_etudiant()
 			printf("Entrer le prenom de l'etudiant ou 0 pour ne pas modifier : ");
 		else
 			printf("Incorrect le prenom doit avoir au moin 3 carractere. entrer le prenom : ");
-		//scanf("%[a-zA-Z ]", chaine);
-		gets(chaine);
-		printf("prenom %s\n", chaine);
+		scanf("%20[a-zA-Z ]", chaine);
+		//gets(chaine);
 		fflush(stdin);
 		bad = 1;
 		if(strcmp(chaine, "0") == 0){
@@ -215,7 +214,7 @@ void edit_etudiant()
 		}else{
 			if(strlen(chaine) >= 3){
 				strcpy(find.prenom, chaine);
-				strcpy(chaine, "\0");
+				//strcpy(chaine, "\0");
 				break;
 			}
 		}
@@ -229,7 +228,7 @@ void edit_etudiant()
 		else
 			printf("Incorrect ceci n'est pas un email. entrer l'email : ");
 		GRAB_EMAIL_ETUDIANT_EDIT_VALIDATION:
-		scanf("%s", chaine);
+		scanf("%20s", chaine);
 		fflush(stdin);
 		bad = 1;
 		if(strcmp(chaine, "0") == 0){
