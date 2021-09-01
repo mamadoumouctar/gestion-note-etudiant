@@ -48,19 +48,26 @@ void add_etudiant()
 
 	Etudiant et = new_etudiant(0, "", "", "", new_date(0, 0, 0));
 	unsigned int entier = 0, bad = 0;
-	char chaine[31];
+	char chaine[32];
 
 	//saisie du nom
 	do{
 		if(bad == 0)
 			printf("Entrer le nom de l'etudiant : ");
-		else
+		else if(bad == 1)
 			printf("Incorrect le nom doit avoir au moin 3 carractere. entrer le nom : ");
-		scanf("%30[a-zA-Z ]", chaine);
+
+		scanf("%32[a-zA-Z ]", chaine);
 		fflush(stdin);
 		bad = 1;
+		if(strlen(chaine) > 30){
+			bad = 2;
+			printf("Incorrect le nom doit avoir moin de 30 carractere. Entrer le nom : ");
+			continue;
+		}
 		if(strlen(chaine) >= 3)
 			break;
+
 	}while(1);
 	strcpy(et.nom, chaine);
 	strcpy(chaine, "\0");
@@ -70,11 +77,17 @@ void add_etudiant()
 	do{
 		if(bad == 0)
 			printf("Entrer le prenom de l'etudiant : ");
-		else
-			printf("Incorrect le prenom doit avoir au moin 3 carractere. entrer le prenom : ");
-		scanf("%20[a-zA-Z ]", chaine);
+		else if(bad == 1)
+			printf("Incorrect le prenom doit avoir au moin 3 carracteres. Entrer le prenom : ");
+
+		scanf("%21[a-zA-Z ]", chaine);
 		fflush(stdin);
 		bad = 1;
+		if(strlen(chaine) > 20){
+			bad = 2;
+			printf("Incorrect le prenom doit avoir moin de 20 carracteres. Entrer le prenom : ");
+			continue;
+		}
 		if(strlen(chaine) >= 3)
 			break;
 	}while(1);
@@ -86,12 +99,17 @@ void add_etudiant()
 	do{
 		if(bad == 0)
 			printf("Entrer l'email de l'etudiant : ");
-		else
+		else if(bad == 1)
 			printf("Incorrect ceci n'est pas un email. entrer l'email : ");
 		GRAB_EMAIL_ETUDIANT_ADD:
-		scanf("%20s", chaine);
+		scanf("%21s", chaine);
 		fflush(stdin);
 		bad = 1;
+		if(strlen(chaine) > 20){
+			bad = 2;
+			printf("Incorrect l'email doit avoir moin de 20 carracteres. Entrer l'email : ");
+			continue;
+		}
 		if(strstr(chaine, "@") && strstr(chaine, ".")){
 			Etudiant find = find_etudiant_with_email(chaine);
 			if(find.numero != 0){
@@ -160,7 +178,7 @@ void delate_etudiant()
 void edit_etudiant()
 {
 	printf("***Modification d'un etudiant***\n");
-	char chaine[31];
+	char chaine[32];
 	unsigned short int bad = 0;
 
 	printf("Entrer l'email de l'etudiant a modifier : ");
@@ -182,19 +200,24 @@ void edit_etudiant()
 	do{
 		if(bad == 0)
 			printf("Entrer le nom de l'etudiant ou 0 pour ne pas modifier : ");
-		else
+		else if(bad == 1)
 			printf("Incorrect le nom doit avoir au moin 3 carractere. entrer le nom : ");
-		scanf("%30[a-zA-Z ]", chaine);
+		scanf("%31[a-zA-Z0 ]", chaine);
 		fflush(stdin);
 		bad = 1;
-		if(strcmp(chaine, "0") == 0){
+		if(strcmp(chaine, "0") == 0)
 			break;
-		}else{
-			if(strlen(chaine) >= 3){
-				strcpy(find.nom, chaine);
-				strcpy(chaine, "");
-				break;
-			}
+
+		if(strlen(chaine) > 20){
+			bad = 2;
+			printf("Incorrect le nom doit avoir moin de 30 carracteres. Entrer le nom : ");
+			continue;
+		}
+
+		if(strlen(chaine) >= 3){
+			strcpy(find.nom, chaine);
+			strcpy(chaine, "");
+			break;
 		}
 	}while(1);
 	bad = 0;
@@ -203,20 +226,24 @@ void edit_etudiant()
 	do{
 		if(bad == 0)
 			printf("Entrer le prenom de l'etudiant ou 0 pour ne pas modifier : ");
-		else
+		else if(bad == 1)
 			printf("Incorrect le prenom doit avoir au moin 3 carractere. entrer le prenom : ");
-		scanf("%20[a-zA-Z ]", chaine);
+		scanf("%21[a-zA-Z0 ]", chaine);
 		//gets(chaine);
 		fflush(stdin);
 		bad = 1;
-		if(strcmp(chaine, "0") == 0){
+		if(strcmp(chaine, "0") == 0)
 			break;
-		}else{
-			if(strlen(chaine) >= 3){
-				strcpy(find.prenom, chaine);
-				//strcpy(chaine, "\0");
-				break;
-			}
+		if(strlen(chaine) > 20){
+			bad = 2;
+			printf("Incorrect le prenom doit avoir moin de 20 carracteres. Entrer le prenom : ");
+			continue;
+		}
+
+		if(strlen(chaine) >= 3){
+			strcpy(find.prenom, chaine);
+			//strcpy(chaine, "\0");
+			break;
 		}
 	}while(1);
 	bad = 0;
@@ -225,25 +252,30 @@ void edit_etudiant()
 	do{
 		if(bad == 0)
 			printf("Entrer l'email de l'etudiant ou 0 pour ne pas modifier : ");
-		else
+		else if(bad == 1)
 			printf("Incorrect ceci n'est pas un email. entrer l'email : ");
 		GRAB_EMAIL_ETUDIANT_EDIT_VALIDATION:
-		scanf("%20s", chaine);
+		scanf("%21s", chaine);
 		fflush(stdin);
 		bad = 1;
-		if(strcmp(chaine, "0") == 0){
+		if(strcmp(chaine, "0") == 0)
 			break;
-		}else{
-			if(strstr(chaine, "@") && strstr(chaine, ".") && strlen(chaine) >= 3){
-				Etudiant toBeUnique = find_etudiant_with_email(chaine);
-				if(toBeUnique.numero == 0 || toBeUnique.numero == find.numero){
-					strcpy(find.email, chaine);
-					strcpy(chaine, "\0");
-					break;
-				}else{
-					printf("Incorrect cet email existe deja chez un autre etudiant. entrer l'email svp : ");
-					goto GRAB_EMAIL_ETUDIANT_EDIT_VALIDATION;
-				}
+
+		if(strlen(chaine) > 20){
+			bad = 2;
+			printf("Incorrect l'email doit avoir moin de 20 carracteres. Entrer l'email : ");
+			continue;
+		}
+
+		if(strstr(chaine, "@") && strstr(chaine, ".") && strlen(chaine) >= 3){
+			Etudiant toBeUnique = find_etudiant_with_email(chaine);
+			if(toBeUnique.numero == 0 || toBeUnique.numero == find.numero){
+				strcpy(find.email, chaine);
+				strcpy(chaine, "\0");
+				break;
+			}else{
+				printf("Incorrect cet email existe deja chez un autre etudiant. entrer l'email svp : ");
+				goto GRAB_EMAIL_ETUDIANT_EDIT_VALIDATION;
 			}
 		}
 	}while(1);
