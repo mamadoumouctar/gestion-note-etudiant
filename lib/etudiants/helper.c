@@ -140,6 +140,7 @@ void add_etudiant()
 		goto GRAB_NAISSANCE_ETUDIANT_ADD;
 	}
 
+	et.code_classe = -1;
 	save_etudiant(&et);
 	print_etudiant(et);
 }
@@ -322,13 +323,27 @@ void seach_etudiant()
 	scanf("%[a-zA-Z0-9@.]", chaine);
 
 	Etudiant find = find_etudiant_with_email(chaine);
-	if(find.numero != 0){
-		printf("\n\tInformation sur l'etudiant:\n");
-		print_etudiant(find);
+	if(find.numero == 0){
+		printf("L'email entrer ne correspond a aucun etudiant\n");
+		return;
+	}
+	printf("\n\tInformation sur l'etudiant:\n");
+	print_etudiant(find);
+	if(find.code_classe != -1){
 		Classe cl = find_classe_from_etudiant(find.code_classe);
 		printf("\n\tInformation sur sa classe:\n");
 		print_classe(cl);
+		printf("\n1. Modifier la classe de l'etudiant.\n");
 	}else{
-		printf("L'email entrer ne correspond a aucun etudiant\n");
+		printf("\n\tInformation sur sa classe:\n");
+		printf("\nDesole, cet etudiant n'est pas encore associe a une classe.\n\n");
+
+		printf("1. Associe a une classe.\n");
+
 	}
+	printf("2. Modifier l'etudiant.\n");
+	printf("3. Supprimer l'etudiant.\n");
+	printf("4. Retour au menu principal.\n");
+
+	printf("Votre choix : ");
 }
