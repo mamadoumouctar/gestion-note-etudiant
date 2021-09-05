@@ -145,29 +145,41 @@ void add_etudiant()
 	print_etudiant(et);
 }
 
-void delate_etudiant()
+void delate_etudiant(char *mail)
 {
 	printf("***Modification d'un etudiant***\n");
-	unsigned int entier = 0, bad = 0;
+	Etudiant find;
 	char chaine[31];
+	unsigned int entier = 0, bad = 0;
 
-	printf("Entrer l'email de l'etudiant a Supprimer : ");
-	GRAB_EMAIL_ETUDIANT_DELATE:
-	scanf("%20s", chaine);
-	fflush(stdin);
+	if(mail == NULL){
+		printf("Entrer l'email de l'etudiant a Supprimer : ");
+		GRAB_EMAIL_ETUDIANT_DELATE:
+		scanf("%20s", chaine);
+		fflush(stdin);
 
-	if(strcmp(chaine, "0") == 0) return;
+		if(strcmp(chaine, "0") == 0) return;
 
-	Etudiant find = find_etudiant_with_email(chaine);
-	if(find.numero != 0){
-		print_etudiant(find);
-		printf("Etes vous sure de bien vouloir supprimer cet etudiant [o/N]? ");
+		find = find_etudiant_with_email(chaine);
+		if(find.numero != 0){
+			print_etudiant(find);
+			printf("Etes vous sure de bien vouloir supprimer cet etudiant [o/N]? ");
+		}else{
+			printf("Cet email n'existe pas. Entrer un email svp ou 0 pour retourner : ");
+			goto GRAB_EMAIL_ETUDIANT_DELATE;
+		}
 	}else{
-		printf("Cet email n'existe pas. Entrer un email svp ou 0 pour retourner : ");
-		goto GRAB_EMAIL_ETUDIANT_DELATE;
+		find = find_etudiant_with_email(mail);
+		if(find.numero == 0){
+			printf("Desole cet etudiant n'existe pas\n");
+			return;
+		}
 	}
 
+	if(mail != NULL)
+		printf("Etes vous sure de bien vouloir supprimer cet etudiant [o/N]? ");
 	scanf("%20s", chaine);
+
 	if(strcmp(chaine, "o") == 0 || strcmp(chaine, "O") == 0){
 		update_etudiant(find, 0);
 		printf("\nL'etudiant a ete supprimer avec succes.\n");
@@ -176,25 +188,34 @@ void delate_etudiant()
 	}
 }
 
-void edit_etudiant()
+void edit_etudiant(char *mail)
 {
 	printf("***Modification d'un etudiant***\n");
+	Etudiant find;
 	char chaine[32];
 	unsigned short int bad = 0;
 
-	printf("Entrer l'email de l'etudiant a modifier : ");
-	GRAB_EMAIL_ETUDIANT_EDIT:
-	scanf("%20s", chaine);
-	fflush(stdin);
+	if(mail == NULL){
+		printf("Entrer l'email de l'etudiant a modifier : ");
+		GRAB_EMAIL_ETUDIANT_EDIT:
+		scanf("%20s", chaine);
+		fflush(stdin);
 
-	if(strcmp(chaine, "0") == 0) return;
+		if(strcmp(chaine, "0") == 0) return;
 
-	Etudiant find = find_etudiant_with_email(chaine);
-	if(find.numero != 0){
-		print_etudiant(find);
+		find = find_etudiant_with_email(chaine);
+		if(find.numero != 0){
+			print_etudiant(find);
+		}else{
+			printf("Cet email n'existe pas. Entrer un email svp ou 0 pour retourner : ");
+			goto GRAB_EMAIL_ETUDIANT_EDIT;
+		}
 	}else{
-		printf("Cet email n'existe pas. Entrer un email svp ou 0 pour retourner : ");
-		goto GRAB_EMAIL_ETUDIANT_EDIT;
+		find = find_etudiant_with_email(mail);
+		if(find.numero == 0){
+			printf("Desole cet etudiant n'existe pas.\n");
+			return;
+		}
 	}
 
 	//saisie du nom
@@ -318,9 +339,11 @@ void seach_etudiant()
 {
 	printf("***Rechercher un etudiant***\n");
 	char chaine[21];
+	unsigned int entier = 0;
 
 	printf("Entrer l'email de l'etudiant a rechercher ou 0 pour retourner : ");
 	scanf("%[a-zA-Z0-9@.]", chaine);
+	fflush(stdin);
 
 	Etudiant find = find_etudiant_with_email(chaine);
 	if(find.numero == 0){
@@ -346,4 +369,51 @@ void seach_etudiant()
 	printf("4. Retour au menu principal.\n");
 
 	printf("Votre choix : ");
+	scanf("%d", &entier);
+	fflush(stdin);
+
+	switch(entier){
+		case 1:
+		update_etudiant_classe(&find);
+		break;
+		case 2:
+		edit_etudiant(find.email);
+		break;
+		case 3:
+		delate_etudiant(find.email);
+		break;
+		case 4:
+		break;
+		default:
+		printf("L'option saisie n'est pas disponible");
+	}
+}
+
+void update_etudiant_classe(Etudiant *et)
+{
+	unsigned int entier = 0;
+	char chaine[32]; 
+
+	printf("Entrer le nom de la classe a associe : ");
+	GRAB_update_etudiant_classe:
+	scanf("%30[a-zA-Z0-9 ]", chaine);
+	fflush(stdin);
+
+	if(strcmp(chaine, "0") == 0) return;
+
+	Classe cl = find_classe_with_nom(chaine);
+	if(cl.code != 0){
+		print_classe(cl);
+	}else{
+		printf("Incorrect cette classe n'existe pas. Entrer le nom de la classe ou 0 pour retourner : ");
+		goto GRAB_update_etudiant_classe;
+	}
+
+	if(et->code_classe != cl.code){
+		et->code_classe = cl.code;
+		update_etudiant(*et, 1);
+		printf("La classe \"%s\" a ete ajoute a l'etudiant %s %s avec succes.\n", cl.nom, et->nom, et->prenom);
+	}else{
+		printf("La classe \"%s\" ete deja ajoute a l'etudiant %s %s.\n", cl.nom, et->nom, et->prenom);
+	}
 }

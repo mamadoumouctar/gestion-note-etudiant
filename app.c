@@ -61,10 +61,10 @@ void gestion_etudiants()
 		add_etudiant();
 		break;
 		case 3:
-		edit_etudiant();
+		edit_etudiant(NULL);
 		break;
 		case 4:
-		delate_etudiant();
+		delate_etudiant(NULL);
 		break;
 		case 5:
 		seach_etudiant();

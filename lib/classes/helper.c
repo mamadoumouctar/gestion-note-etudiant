@@ -233,43 +233,6 @@ Classe find_classe_with_code(int code)
 	fclose(file);
 }
 
-Classe find_classe_with_nom(char nom[31])
-{
-	FILE *file;
-	file = fopen("./data/classes.csv", "r");
-
-	if(file == NULL){
-		printf("L'ouverture du fichier a echoue!\n");
-		exit(1);
-	}
-
-	char niveau[9];
-	Classe cl = {0, "", LICENCE};
-
-	do{
-		fscanf(file, "%3d,%20[a-zA-Z0-9 ],%8s\n", &cl.code, cl.nom, niveau);
-		if(strcmp(nom, cl.nom) == 0){
-			if(strcmp(niveau, "LICENCE") == 0)
-				cl.niveau = 0;
-			else if(strcmp(niveau, "MASTER") == 0)
-				cl.niveau = 1;
-			else
-				cl.niveau = -1;
-			fclose(file);
-			return cl;
-		}
-	}while(!feof(file));
-	fclose(file);
-	cl.code = 0;
-	strcpy(cl.nom, "");
-	cl.niveau = 0;
-	return cl;
-
-	fclose(file);
-	cl.code = 0;
-	return cl;
-}
-
 void seach_classe()
 {
 	printf("***Rechercher une classe***\n");

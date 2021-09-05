@@ -36,6 +36,7 @@ char * get_niveau_classe();
 int grab_nom_classe();
 int grab_niveau_classe();
 
+Classe find_classe_with_nom(char nom[31]);
 Classe find_classe_from_etudiant(unsigned int);
 
 #endif
