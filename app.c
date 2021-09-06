@@ -103,7 +103,7 @@ void gestion_classes()
 		delate_classe();
 		break;
 		case 5:
-		seach_classe();
+		seach_classe(NULL);
 		break;
 		default:
 		printf("L'option saisie n'est pas disponible");

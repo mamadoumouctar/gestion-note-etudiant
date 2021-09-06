@@ -11,4 +11,6 @@ void seach_classe();
 
 Classe find_classe_with_code(int code);
 
+void gestion_etudiants_classe(Classe *);
+
 #endif

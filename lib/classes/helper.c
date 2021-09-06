@@ -3,6 +3,7 @@
 #include <string.h>
 #include "helper.h"
 #include "../etudiants/etudiant.h"
+#include "../appartenir.h"
 
 int last = -1;
 
@@ -233,17 +234,28 @@ Classe find_classe_with_code(int code)
 	fclose(file);
 }
 
-void seach_classe()
+void seach_classe(char *nom_classe)
 {
-	printf("***Rechercher une classe***\n");
-
 	char chaine[31];
+	unsigned int entier = 0;
 	Etudiant * etudiants;
 
-	printf("Entrer le nom de la classe a rechercher : ");
-	scanf("%20[a-zA-Z0-9 ]", chaine);
-	fflush(stdin);
+	if(nom_classe == NULL){
+		printf("***Rechercher une classe***\n");
+
+		printf("Entrer le nom de la classe a rechercher : ");
+		scanf("%20[a-zA-Z0-9 ]", chaine);
+		fflush(stdin);
+	}else{
+		strcpy(chaine, nom_classe);
+	}
+
 	Classe find = find_classe_with_nom(chaine);
+
+	if(find.code == 0){
+		printf("Incorrect cette classe n'existe pas.\n");
+		return;
+	}
 
 	printf("------------Information sur la classe------------\n");
 	print_classe(find);
@@ -255,7 +267,7 @@ void seach_classe()
 	if(max == 0){
 		printf("Desole cette classe n'a pas encore d'etudiant.\n");
 		free(etudiants);
-		return;
+		goto AUTHER_SYSTEM;
 	}else{
 		printf("\nNous avons %d etudiant(s) dans cette classe\n", max);
 	}
@@ -281,8 +293,54 @@ void seach_classe()
 		printf("+--------+-------------------------------+---------------------+---------------------+-------------------+\n");
 		//print_etudiant(etudiants[i]);
 	}
-	free(etudiants);
-	return;
+
+	AUTHER_SYSTEM:
+	printf("\n");
+	printf("1. Gestion des etudiants de la classe.\n");
+	printf("2. Gestion de la classe.\n");
+	printf("3. Gestion des matiers de la classe.\n");
+
+	printf("Votre choix : ");
+	scanf("%d", &entier);
+	fflush(stdin);
+
+	switch(entier){
+		case 1:
+		gestion_etudiants_classe(&find);
+		break;
+	}
 
 	free(etudiants);
+}
+
+void gestion_etudiants_classe(Classe *cl)
+{
+	unsigned int entier = 0;
+	system("cls");
+
+	printf("Gestion des etudiants de la classe %s.\n", cl->nom);
+	printf("\n");
+
+	printf("1. Retirer un etudiant de la classe %s.\n", cl->nom);
+	printf("2. Rajouter un etudiant de la classe %s.\n", cl->nom);
+	printf("0. Pour retourner.\n");
+
+	printf("Votre choix : ");
+	scanf("%d", &entier);
+	fflush(stdin);
+
+	switch(entier){
+		case 1:
+		disappend_etudiant_into_classe(cl);
+		break;
+		case 2:
+		append_etudiant_into_classe(cl);
+		break;
+		case 0: case 3:
+		seach_classe(cl->nom);
+		break;
+		default:
+		printf("L'option saisie n'est pas disponible.\n");
+	}
+
 }
