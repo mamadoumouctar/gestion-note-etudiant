@@ -125,7 +125,7 @@ void edit_matiere()
 
 void delate_matiere()
 {
-	printf("***Modification d'une matiere***\n");
+	printf("***Suppression d'une matiere***\n");
 	unsigned int entier = 0, bad = 0;
 	char chaine[31];
 

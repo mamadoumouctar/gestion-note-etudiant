@@ -147,7 +147,7 @@ void add_etudiant()
 
 void delate_etudiant(char *mail)
 {
-	printf("***Modification d'un etudiant***\n");
+	printf("***Suppresion d'un etudiant***\n");
 	Etudiant find;
 	char chaine[31];
 	unsigned int entier = 0, bad = 0;
