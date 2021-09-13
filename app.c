@@ -4,25 +4,31 @@
 #include "lib/etudiants/helper.h"
 #include "lib/matieres/helper.h"
 
-int clavier = 0;
+int clavier = 0, option = 1;
 
 void clear();
 void gestion_etudiants();
 void gestion_classes();
 void gestion_matieres();
+void gestion_notes();
 
 int main(int argc, char const *argv[])
 {
+	START_APP:
+	clear();
 	printf("Application de gestion d'etudiant.\n");
 
 	printf("1. Gestion d'etudiant.\n");
 	printf("2. Gestion de classe.\n");
 	printf("3. Gestion des matiers\n");
+	printf("4. Gestion des notes.\n");
+	printf("9. Pour Fermer le programme.\n");
 
 	printf(": ");
 	scanf("%d", &clavier);
 	fflush(stdin);
 
+	OPTION:
 	clear();
 	switch(clavier){
 		case 1:
@@ -34,9 +40,39 @@ int main(int argc, char const *argv[])
 		case 3:
 		gestion_matieres();
 		break;
+		case 4:
+		gestion_notes();
+		break;
+		case 9:
+		printf("Fermeture du programme. Et a bientot.\n");
+		exit(EXIT_SUCCESS);
+		break;
 		default:
 		printf("L'option saisie n'est pas disponible.\n");
+		exit(EXIT_FAILURE);
 	}
+
+	option = 1;
+
+	printf("\n");
+	printf("0. Pour retourner.\n");
+	printf("9. Pour l'accueil.\n");
+	printf("Votre choix : ");
+	scanf("%d", &option);
+	fflush(stdin);
+	printf("\n");
+
+	if(option == 0){
+		goto OPTION;
+	}else if(option == 9){
+		main(argc,argv);
+	}else{
+		printf("L'option saisie n'est pas disponible.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	clear();
+	goto START_APP;
 
 	return 0;
 }
@@ -49,7 +85,7 @@ void gestion_etudiants()
 	printf("4. Supprimer un etudiant.\n");
 	printf("5. Rechercher un etudiant.\n");
 
-	printf(": ");
+	printf("Votre choix : ");
 	scanf("%d", &clavier);
 	fflush(stdin);
 
@@ -145,6 +181,11 @@ void gestion_matieres()
 		printf("L'option saisie n'est pas disponible");
 		exit(1);
 	}
+}
+
+void gestion_notes()
+{
+	printf("\n***Gestion des notes***\n");
 }
 
 void clear()
