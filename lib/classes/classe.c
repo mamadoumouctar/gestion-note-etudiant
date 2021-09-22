@@ -196,7 +196,7 @@ Classe find_classe_with_nom(char nom[31])
 
 	if(file == NULL){
 		printf("L'ouverture du fichier a echoue!\n");
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 
 	char niveau[9];
@@ -219,10 +219,6 @@ Classe find_classe_with_nom(char nom[31])
 	cl.code = 0;
 	strcpy(cl.nom, "");
 	cl.niveau = 0;
-	return cl;
-
-	fclose(file);
-	cl.code = 0;
 	return cl;
 }
 

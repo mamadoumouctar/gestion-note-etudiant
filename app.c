@@ -3,8 +3,9 @@
 #include "lib/classes/helper.h"
 #include "lib/etudiants/helper.h"
 #include "lib/matieres/helper.h"
+#include "lib/notes/matiere.h"
 
-int clavier = 0, option = 1;
+int clavier = 0, option = 1, cache = -1;
 
 void clear();
 void gestion_etudiants();
@@ -30,6 +31,7 @@ int main(int argc, char const *argv[])
 
 	OPTION:
 	clear();
+	cache = clavier;
 	switch(clavier){
 		case 1:
 		gestion_etudiants();
@@ -52,17 +54,18 @@ int main(int argc, char const *argv[])
 		exit(EXIT_FAILURE);
 	}
 
-	option = 1;
+	option = -1;
 
 	printf("\n");
 	printf("0. Pour retourner.\n");
 	printf("9. Pour l'accueil.\n");
 	printf("Votre choix : ");
-	scanf("%d", &option);
+	scanf("%1d", &option);
 	fflush(stdin);
 	printf("\n");
 
 	if(option == 0){
+		clavier = cache;
 		goto OPTION;
 	}else if(option == 9){
 		main(argc,argv);
@@ -186,10 +189,24 @@ void gestion_matieres()
 void gestion_notes()
 {
 	printf("\n***Gestion des notes***\n");
+	printf("1. Gerer les notes pour une matiere\n");
+
+	printf("Votre choix : ");
+	scanf("%d", &clavier);
+	fflush(stdin);
+
+	switch(clavier){
+		case 1:
+		matiere_note_index();
+		break;
+		default:
+		printf("L'option saisie n'est pas disponible.\n");
+		exit(EXIT_FAILURE);
+	}
 }
 
 void clear()
 {
 	system("cls");
 }
-//gcc app.c lib/classes/classe.c lib/classes/helper.c lib/etudiants/etudiant.c lib/etudiants/helper.c lib/matieres/matiere.c lib/matieres/helper.c lib/appartenir.c -o main
+//gcc app.c lib/classes/classe.c lib/classes/helper.c lib/etudiants/etudiant.c lib/etudiants/helper.c lib/matieres/matiere.c lib/matieres/helper.c lib/notes/matiere.c lib/appartenir.c -o main

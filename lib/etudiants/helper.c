@@ -126,23 +126,50 @@ void add_etudiant()
 	//siasie de la date de naissance
 	GRAB_NAISSANCE_ETUDIANT_ADD:
 	if(bad == 0)
-		printf("Entrer la date de naissance sous le format jj/mm/aaaa : ");
+		printf("Entrer la date de naissance sous le format JJ/MM/AAAA : ");
 	else
-		printf("Incorrect ceci n'est pas une date de naissance : ");
+		printf("Incorrect ceci n'est pas une date de naissance. Entrer la date de naissance sous le format JJ/MM/AAAA : ");
 
-	scanf("%2d/%2d/%4d", &et.naissance.jj, &et.naissance.mm, &et.naissance.aaaa);
+	entier = scanf("%2d/%2d/%4d", &et.naissance.jj, &et.naissance.mm, &et.naissance.aaaa);
+	fflush(stdin);
 
 	if(
 		(et.naissance.jj < 0 || et.naissance.jj > 31) ||
 		(et.naissance.mm < 0 || et.naissance.mm > 12) ||
-		et.naissance.aaaa < 1945
+		(et.naissance.aaaa < 1945)
 	){
 		goto GRAB_NAISSANCE_ETUDIANT_ADD;
+	}else{
+		if(entier != 3)
+			goto GRAB_NAISSANCE_ETUDIANT_ADD;
 	}
 
-	et.code_classe = -1;
+	//Classe
+	printf("Entrer le nom de la classe: ");
+	GRAB_CLASSE_IN_ETUDIANT:
+	entier = scanf("%21[a-zA-Z0-9 ]", chaine);
+	fflush(stdin);
+
+	if(!entier){
+		printf("Incorrect ceci n'est pas un nom de classe. Entrer le nom de la classe : ");
+		goto GRAB_CLASSE_IN_ETUDIANT;
+	}
+
+	Classe clEt = find_classe_with_nom(chaine);
+	if(clEt.code){
+		et.code_classe = clEt.code;
+	}else{
+		printf("Desole cette classe n'existe. Entrer le nom de la classe : ");
+		goto GRAB_CLASSE_IN_ETUDIANT;
+	}
+
 	save_etudiant(&et);
+
+	printf("Information de l'etudiant :\n");
 	print_etudiant(et);
+
+	printf("Information sur sa classe :\n");
+	print_classe(clEt);
 }
 
 void delate_etudiant(char *mail)
@@ -193,7 +220,7 @@ void edit_etudiant(char *mail)
 	printf("***Modification d'un etudiant***\n");
 	Etudiant find;
 	char chaine[32];
-	unsigned short int bad = 0;
+	unsigned short int bad = 0, entier = 0;
 
 	if(mail == NULL){
 		printf("Entrer l'email de l'etudiant a modifier : ");
@@ -331,8 +358,39 @@ void edit_etudiant(char *mail)
 		}
 	}while(1);
 
+	//saisie de la Classe
+	fflush(stdin);
+	printf("Entrer le nom de la classe ou 0 pour ne pas modifier : ");
+	GRAB_CLASSE_IN_ETUDIANT:
+	entier = scanf("%21[a-zA-Z0-9 ]", chaine);
+	fflush(stdin);
+
+	if(!strcmp(chaine, "0")){
+		update_etudiant(find, 1);
+		print_etudiant(find);
+		return;	
+	}
+
+	if(!entier){
+		printf("Incorrect ceci n'est pas un nom de classe. Entrer le nom de la classe : ");
+		goto GRAB_CLASSE_IN_ETUDIANT;
+	}
+
+	Classe clEt = find_classe_with_nom(chaine);
+	if(clEt.code){
+		find.code_classe = clEt.code;
+	}else{
+		printf("Desole cette classe n'existe. Entrer le nom de la classe : ");
+		goto GRAB_CLASSE_IN_ETUDIANT;
+	}
+
 	update_etudiant(find, 1);
+
+	printf("Information sur l'etudiant\n");
 	print_etudiant(find);
+
+	printf("Information sur sa classe\n");
+	print_classe(clEt);
 }
 
 void seach_etudiant()

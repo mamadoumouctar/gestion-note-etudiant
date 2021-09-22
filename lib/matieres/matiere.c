@@ -140,8 +140,10 @@ Matiere get_one_matiere_with(char *libelle)
 
 	if(index == 1)
 		return matieres[0];
-	else if(index == 0)
+	else if(index == 0){
+		Matiere null = {0, "", 0};
 		return null;
+	}
 
 	printf("+----+---------------+------------------------+-----------------+\n");
 	printf("| N  |   Reference   |        Libelle         |   Coefficient   |\n");

@@ -167,8 +167,10 @@ void seach_matiere()
 	fflush(stdin);
 	printf("\n");
 
-	printf("+-------------+------------------+---------------+\n");
-	printf("|  Reference  |     Libellet     |  Coefficient  |\n");
-	printf("+-------------+------------------+---------------+\n");
-	find_matieres_and_print(chaine);
+	Matiere mat = get_one_matiere_with(chaine);
+	if(mat.reference){
+		print_matiere(mat);
+	}else{
+		printf("Desole cette matiere n'existe pas encore.\n");
+	}
 }
