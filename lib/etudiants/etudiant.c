@@ -68,7 +68,7 @@ Etudiant find_etudiant_with_email(char email[21])
 
 int find_etudiant_from_classe(unsigned int code_classe, Etudiant * etudiants)
 {
-	Etudiant et;
+	Etudiant et, null = {0, "", "", "", {0, 0, 0}};
 	unsigned short int index = 0, max = 10;
 
 	FILE *file = fopen("./data/etudiants.csv", "r");
@@ -86,6 +86,10 @@ int find_etudiant_from_classe(unsigned int code_classe, Etudiant * etudiants)
 			if(index > max - 1) break;
 		}
 	}while(!feof(file));
+
+	for(unsigned int i = index; i < max; i++){
+		etudiants[i] = null;
+	}
 
 	fclose(file);
 	return index;

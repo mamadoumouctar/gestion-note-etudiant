@@ -115,6 +115,7 @@ void call_controller(Matiere mat, unsigned int controller, unsigned int action)
 			}
 		}
 		print_classe(find);
+		call_controller_collection(find, mat, controller);
 	}else{
 		printf("C'est sorcier ou quoi ?\n");
 		exit(EXIT_FAILURE);
@@ -127,6 +128,36 @@ void call_controller_item(Etudiant et, Matiere mat, unsigned int controller)
 		//Afficher les notes
 		case 1:
 		print_note_etudiant_matiere(et, mat);
+		break;
+		//Ajouter les notes
+		case 2:
+		break;
+		//Modifier les notes
+		case 3:
+		break;
+		//Supprimer les notes
+		case 4:
+		break;
+		default: 
+		printf("C'est sorcier ou quoi\n");
+		exit(EXIT_FAILURE);
+	}
+}
+
+void call_controller_collection(Classe cl, Matiere mat, unsigned int controller)
+{
+	//on recupere les etudiants qui sont dans cette classe
+	Etudiant *etudiants = malloc(sizeof(Etudiant) * 10);
+	unsigned int max = find_etudiant_from_classe(cl.code, etudiants);
+	/*for(int i = 0; i < 10; i++){
+		if(etudiants[i].numero)
+			print_etudiant(etudiants[i]);
+	}*/
+
+	switch (controller){
+		//Afficher les notes
+		case 1:
+		print_note_etudiants_classe(cl,mat, etudiants);		
 		break;
 		//Ajouter les notes
 		case 2:

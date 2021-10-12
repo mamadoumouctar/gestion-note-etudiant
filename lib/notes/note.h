@@ -12,6 +12,7 @@ typedef struct Note{
 } Note;
 
 void print_note_etudiant_matiere(Etudiant, Matiere);
+void print_note_etudiants_classe(Classe, Matiere, Etudiant *);
 
 Note find_note(Etudiant, Matiere);
 

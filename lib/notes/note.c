@@ -108,6 +108,121 @@ void print_note_etudiant_matiere(Etudiant et, Matiere mat)
 	}
 }
 
+void print_note_etudiants_classe(Classe cl, Matiere mat, Etudiant * etudiants)
+{
+	unsigned int entier = 6, i = 0;
+	printf("Quel note voulez vous afficher ?\n");
+	printf("1. Note CC.\n");
+	printf("2. Note DS.\n");
+	printf("3. Les deux.\n");
+	printf("0. Retour.\n");
+	printf("Votre choix : ");
+	scanf("%d", &entier);
+	fflush(stdin);
+
+	Note find;
+	printf("Notes de la classe %s pour la matiere %s\n", cl.nom, mat.libelle);
+
+	switch(entier){
+		case 1:
+		printf("+--------+-------------------------------+---------------------+---------------------+-------------------+---------+\n");
+		printf("| Numero |  Nom                          | Prenom              | Email               | Date de naissance | Note CC |\n");
+		printf("+--------+-------------------------------+---------------------+---------------------+-------------------+---------+\n");
+
+		while(etudiants[i].numero != 0){
+			find = find_note(etudiants[i], mat);
+			printf("|  %3d   | %-30s| %-20s| %-20s| ", etudiants[i].numero, etudiants[i].nom, etudiants[i].prenom, etudiants[i].email);
+			if(etudiants[i].naissance.jj < 10)
+				printf("0%1d", etudiants[i].naissance.jj);
+			else
+				printf("%2d", etudiants[i].naissance.jj);
+
+			printf("/");
+
+			if(etudiants[i].naissance.mm < 10)
+				printf("0%1d", etudiants[i].naissance.mm);
+			else
+				printf("%2d", etudiants[i].naissance.mm);
+
+			printf("/%4d        |", etudiants[i].naissance.aaaa);
+			if(find.note_cc != 0)
+				printf("  %2.2f  |\n", find.note_cc);
+			else
+				printf("    -    |\n");
+			printf("+--------+-------------------------------+---------------------+---------------------+-------------------+---------+\n");
+			i++;
+		}
+		break;
+		case 2:
+		printf("+--------+-------------------------------+---------------------+---------------------+-------------------+---------+\n");
+		printf("| Numero |  Nom                          | Prenom              | Email               | Date de naissance | Note DS |\n");
+		printf("+--------+-------------------------------+---------------------+---------------------+-------------------+---------+\n");
+
+		while(etudiants[i].numero != 0){
+			find = find_note(etudiants[i], mat);
+			printf("|  %3d   | %-30s| %-20s| %-20s| ", etudiants[i].numero, etudiants[i].nom, etudiants[i].prenom, etudiants[i].email);
+			if(etudiants[i].naissance.jj < 10)
+				printf("0%1d", etudiants[i].naissance.jj);
+			else
+				printf("%2d", etudiants[i].naissance.jj);
+
+			printf("/");
+
+			if(etudiants[i].naissance.mm < 10)
+				printf("0%1d", etudiants[i].naissance.mm);
+			else
+				printf("%2d", etudiants[i].naissance.mm);
+
+			printf("/%4d        |", etudiants[i].naissance.aaaa);
+			if(find.note_ds != 0)
+				printf("  %2.2f  |\n", find.note_ds);
+			else
+				printf("    -    |\n");
+			printf("+--------+-------------------------------+---------------------+---------------------+-------------------+---------+\n");
+			i++;
+		}
+		break;
+		case 3:
+		printf("+--------+-------------------------------+---------------------+---------------------+-------------------+---------+---------+\n");
+		printf("| Numero |  Nom                          | Prenom              | Email               | Date de naissance | Note CC | Note DS |\n");
+		printf("+--------+-------------------------------+---------------------+---------------------+-------------------+---------+---------+\n");
+
+		while(etudiants[i].numero != 0){
+			find = find_note(etudiants[i], mat);
+			printf("|  %3d   | %-30s| %-20s| %-20s| ", etudiants[i].numero, etudiants[i].nom, etudiants[i].prenom, etudiants[i].email);
+			if(etudiants[i].naissance.jj < 10)
+				printf("0%1d", etudiants[i].naissance.jj);
+			else
+				printf("%2d", etudiants[i].naissance.jj);
+
+			printf("/");
+
+			if(etudiants[i].naissance.mm < 10)
+				printf("0%1d", etudiants[i].naissance.mm);
+			else
+				printf("%2d", etudiants[i].naissance.mm);
+
+			printf("/%4d        |", etudiants[i].naissance.aaaa);
+			if(find.note_cc != 0)
+				printf("  %2.2f  |", find.note_cc);
+			else
+				printf("    -    |");
+			if(find.note_ds != 0)
+				printf("  %2.2f  |\n", find.note_ds);
+			else
+				printf("    -    |\n");
+			printf("+--------+-------------------------------+---------------------+---------------------+-------------------+---------+---------+\n");
+			i++;
+		}
+		break;
+		case 0:
+		return;
+		default:
+		printf("Desole cette option n'est pas pris en charge.\n");
+		exit(EXIT_FAILURE);
+	}
+}
+
 Note find_note(Etudiant et, Matiere mat)
 {
 	FILE *file = fopen("data/notes.csv", "r");
