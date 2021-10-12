@@ -4,6 +4,7 @@
 #include "matiere.h"
 #include "../etudiants/etudiant.h"
 #include "../matieres/matiere.h"
+#include "note.h"
 
 char chaine[31];
 unsigned int entier = 0;
@@ -21,7 +22,7 @@ void matiere_note_index()
 
 	if(!strcmp(chaine, "0")) return;
 
-	if(find.reference == NULL){
+	if(find.reference == 0){
 		printf("Desole cette matiere n'existe. Entrer le nom de la matiere ou 0 pour retourner : ");
 		goto GRAB_PREVENT_FIND_NULL;
 	}
@@ -85,6 +86,7 @@ void call_controller(Matiere mat, unsigned int controller, unsigned int action)
 			}
 		}
 		print_etudiant(find);
+		call_controller_item(find, mat,controller);
 	}else if(action == 2){
 		printf("Entrer le nom de la classe : ");
 		GRAB_IN_CONTROLLER_2:
@@ -115,6 +117,28 @@ void call_controller(Matiere mat, unsigned int controller, unsigned int action)
 		print_classe(find);
 	}else{
 		printf("C'est sorcier ou quoi ?\n");
+		exit(EXIT_FAILURE);
+	}
+}
+
+void call_controller_item(Etudiant et, Matiere mat, unsigned int controller)
+{
+	switch (controller){
+		//Afficher les notes
+		case 1:
+		print_note_etudiant_matiere(et, mat);
+		break;
+		//Ajouter les notes
+		case 2:
+		break;
+		//Modifier les notes
+		case 3:
+		break;
+		//Supprimer les notes
+		case 4:
+		break;
+		default: 
+		printf("C'est sorcier ou quoi\n");
 		exit(EXIT_FAILURE);
 	}
 }
