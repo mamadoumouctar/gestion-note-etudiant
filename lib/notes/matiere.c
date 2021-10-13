@@ -158,10 +158,11 @@ void call_controller_collection(Classe cl, Matiere mat, unsigned int controller)
 	switch (controller){
 		//Afficher les notes
 		case 1:
-		print_note_etudiants_classe(cl,mat, etudiants);		
+		print_note_etudiants_classe(cl, mat, etudiants);		
 		break;
 		//Ajouter les notes
 		case 2:
+		add_note_etudiant_classe(cl, mat, etudiants);
 		break;
 		//Modifier les notes
 		case 3:

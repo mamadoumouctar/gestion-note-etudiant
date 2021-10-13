@@ -239,6 +239,8 @@ void add_note_etudiant_matiere(Etudiant et, Matiere mat)
 	scanf("%d", &entier);
 	fflush(stdin);
 
+	printf("Ajout de la note l'etudiant %s %s pour la matiere %s\n", et.nom, et.prenom, mat.libelle);
+
 	Note note;
 	note.id_etudiant = et.numero;
 	note.id_matiere = mat.reference;
@@ -302,6 +304,106 @@ void add_note_etudiant_matiere(Etudiant et, Matiere mat)
 		exit(EXIT_FAILURE);
 	}
 	save_note(note);
+}
+
+void add_note_etudiant_classe(Classe cl, Matiere mat, Etudiant * etudiants)
+{
+	unsigned int entier = 6, i = 0, bad = 0, val = 0;
+	printf("Quel note voulez vous afficher ?\n");
+	printf("1. Note CC.\n");
+	printf("2. Note DS.\n");
+	printf("3. Les deux.\n");
+	printf("0. Retour.\n");
+	printf("Votre choix : ");
+	scanf("%d", &entier);
+	fflush(stdin);
+
+	Note note;
+	printf("Ajout de note a la classe %s pour la matiere %s\n", cl.nom, mat.libelle);
+
+	switch(entier){
+		case 1:
+			while(etudiants[i].numero != 0){
+				if(!already_has_note(etudiants[i], mat)){
+					bad = 0;
+					note.id_etudiant = etudiants[i].numero;
+					note.id_matiere = mat.reference;
+					note.note_ds = 0;
+					print_etudiant(etudiants[i]);
+					do{
+						if(bad){
+							printf("Incorrect la note de CC est comprise entre 0 et 20 : ");
+						}else{
+							bad = 1;
+							printf("Entrer la note de CC : ");
+						}
+						val = scanf("%f", &note.note_cc);
+						fflush(stdin);
+					}while(note.note_cc > 20 || note.note_cc <= 0 || val != 1);
+					save_note(note);
+				}
+				i++;
+			}
+		break;
+		case 2:
+			while(etudiants[i].numero != 0){
+				if(!already_has_note(etudiants[i], mat)){
+					bad = 0;
+					note.id_etudiant = etudiants[i].numero;
+					note.id_matiere = mat.reference;
+					note.note_cc = 0;
+					print_etudiant(etudiants[i]);
+					do{
+						if(bad){
+							printf("Incorrect la note de DS est comprise entre 0 et 20 : ");
+						}else{
+							bad = 1;
+							printf("Entrer la note de DS : ");
+						}
+						val = scanf("%f", &note.note_ds);
+						fflush(stdin);
+					}while(note.note_ds > 20 || note.note_ds <= 0 || val != 1);
+					save_note(note);
+				}
+				i++;
+			}
+		break;
+		case 3:
+			while(etudiants[i].numero != 0){
+				if(!already_has_note(etudiants[i], mat)){
+					bad = 0;
+					note.id_etudiant = etudiants[i].numero;
+					note.id_matiere = mat.reference;
+					print_etudiant(etudiants[i]);
+					do{
+						if(bad){
+							printf("Incorrect la note de CC est comprise entre 0 et 20 : ");
+						}else{
+							bad = 1;
+							printf("Entrer la note de CC : ");
+						}
+						val = scanf("%f", &note.note_cc);
+						fflush(stdin);
+					}while(note.note_cc > 20 || note.note_cc <= 0 || val != 1);
+
+					bad = 0;
+					do{
+						if(bad){
+							printf("Incorrect la note de DS est comprise entre 0 et 20 : ");
+						}else{
+							bad = 1;
+							printf("Entrer la note de DS : ");
+						}
+						val = scanf("%f", &note.note_ds);
+						fflush(stdin);
+					}while(note.note_ds > 20 || note.note_ds <= 0 || val != 1);
+					save_note(note);
+				}
+				i++;
+			}
+		break;
+	}
+
 }
 
 Note find_note(Etudiant et, Matiere mat)

@@ -15,6 +15,7 @@ void print_note_etudiant_matiere(Etudiant, Matiere);
 void print_note_etudiants_classe(Classe, Matiere, Etudiant *);
 
 void add_note_etudiant_matiere(Etudiant, Matiere);
+void add_note_etudiant_classe(Classe, Matiere, Etudiant *);
 
 Note find_note(Etudiant, Matiere);
 void save_note(Note);
