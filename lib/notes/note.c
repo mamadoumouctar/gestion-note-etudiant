@@ -223,6 +223,87 @@ void print_note_etudiants_classe(Classe cl, Matiere mat, Etudiant * etudiants)
 	}
 }
 
+void add_note_etudiant_matiere(Etudiant et, Matiere mat)
+{
+	if(already_has_note(et, mat)){
+		printf("Desole cette etudiants a deja une note dans cette matiere.");
+		return;
+	}
+	unsigned int entier = 6, bad = 0;
+	printf("Quel note voulez vous afficher ?\n");
+	printf("1. Note CC.\n");
+	printf("2. Note DS.\n");
+	printf("3. Les deux.\n");
+	printf("0. Retour.\n");
+	printf("Votre choix : ");
+	scanf("%d", &entier);
+	fflush(stdin);
+
+	Note note;
+	note.id_etudiant = et.numero;
+	note.id_matiere = mat.reference;
+
+	switch(entier){
+		case 1:
+		do{
+			if(bad){
+				printf("Incorrect la note de CC est comprise entre 0 et 20 : ");
+			}else{
+				bad = 1;
+				printf("Entrer la note de CC : ");
+			}
+			scanf("%f", &note.note_cc);
+			fflush(stdin);
+		}while(note.note_cc > 20 || note.note_cc <= 0);
+		note.note_ds = 0;
+		break;
+		case 2:
+		do{
+			if(bad){
+				printf("Incorrect la note de DS est comprise entre 0 et 20 : ");
+			}else{
+				bad = 1;
+				printf("Entrer la note de DS : ");
+			}
+			scanf("%f", &note.note_ds);
+			fflush(stdin);
+		}while(note.note_ds > 20 || note.note_ds <= 0);
+		note.note_cc = 0;
+		break;
+		case 3:
+		do{
+			if(bad){
+				printf("Incorrect la note de CC est comprise entre 0 et 20 : ");
+			}else{
+				bad = 1;
+				printf("Entrer la note CC : ");
+			}
+			scanf("%f", &note.note_cc);
+			fflush(stdin);
+		}while(note.note_cc > 20 || note.note_cc <= 0);
+
+		bad = 0;
+		do{
+			if(bad){
+				printf("Incorrect la note de DS est comprise entre 0 et 20 : ");
+			}else{
+				bad = 1;
+				printf("Entrer la note de DS : ");
+			}
+			scanf("%f", &note.note_ds);
+			fflush(stdin);
+		}while(note.note_ds > 20 || note.note_ds <= 0);
+		break;
+		case 0:
+		return;
+		break;
+		default:
+		printf("Desole cette option n'est pas pris en charge.\n");
+		exit(EXIT_FAILURE);
+	}
+	save_note(note);
+}
+
 Note find_note(Etudiant et, Matiere mat)
 {
 	FILE *file = fopen("data/notes.csv", "r");
@@ -241,4 +322,35 @@ Note find_note(Etudiant et, Matiere mat)
 	}while(!feof(file));
 	fclose(file);
 	return null;
+}
+
+void save_note(Note note)
+{
+	FILE *file = fopen("data/notes.csv", "a");
+	if(file == NULL){
+		printf("L'ouverture du fichier a echoue.\n");
+		exit(EXIT_FAILURE);
+	}
+	fprintf(file, "%d,%d,%.2f,%.2f\n", note.id_etudiant, note.id_matiere, note.note_cc, note.note_ds);
+	fclose(file);
+}
+
+unsigned int already_has_note(Etudiant et, Matiere mat)
+{
+	FILE *file = fopen("data/notes.csv", "r");
+	Note note;
+
+	if(file == NULL){
+		printf("L'ouverture du fichier a echoue.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	do{
+		fscanf(file, "%d,%d,%f,%f\n", &note.id_etudiant, &note.id_matiere, &note.note_cc, &note.note_ds);
+		if(note.id_etudiant == et.numero && note.id_matiere == mat.reference){
+			return 1;
+		}
+	}while(!feof(file));
+	fclose(file);
+	return 0;
 }

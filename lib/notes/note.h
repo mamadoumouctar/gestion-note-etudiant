@@ -14,6 +14,10 @@ typedef struct Note{
 void print_note_etudiant_matiere(Etudiant, Matiere);
 void print_note_etudiants_classe(Classe, Matiere, Etudiant *);
 
+void add_note_etudiant_matiere(Etudiant, Matiere);
+
 Note find_note(Etudiant, Matiere);
+void save_note(Note);
+unsigned int already_has_note(Etudiant, Matiere);
 
 #endif

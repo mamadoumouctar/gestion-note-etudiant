@@ -131,6 +131,7 @@ void call_controller_item(Etudiant et, Matiere mat, unsigned int controller)
 		break;
 		//Ajouter les notes
 		case 2:
+		add_note_etudiant_matiere(et, mat);
 		break;
 		//Modifier les notes
 		case 3:
