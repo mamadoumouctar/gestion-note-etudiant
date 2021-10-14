@@ -649,6 +649,85 @@ void edit_note_etudiant_classe(Classe cl, Matiere mat, Etudiant * etudiants)
 	}
 }
 
+void delate_note_etudiant_matier(Etudiant et, Matiere mat)
+{
+	system("cls");
+	unsigned int has_not_note = -1;
+	Note find = find_note(et, mat);
+	printf("Suppression de la note de l'etudiant %s %s pour la matiere %s\n", et.nom, et.prenom, mat.libelle);
+	if(has_not_note = (find.note_cc == 0 && find.note_ds == 0)){
+		printf("Desole cette etudiants n'a pas de note pour cette matiere.\n");
+		return;
+	}
+	print_etudiant(et);
+	printf("|\t Note CC : %2.2f\t\t\t|\n", find.note_cc);
+	printf("+-----------------------------------------------+\n");
+	printf("|\t Note DS : %2.2f\t\t\t|\n", find.note_ds);
+	printf("+-----------------------------------------------+\n");
+
+	unsigned int entier = 6, bad = 0, val = 0;
+	printf("Quel note voulez vous supprimer ?\n");
+	printf("1. Note CC.\n");
+	printf("2. Note DS.\n");
+	printf("3. Les deux.\n");
+	printf("0. Retour.\n");
+	printf("Votre choix : ");
+	scanf("%d", &entier);
+	fflush(stdin);
+
+	switch(entier){
+		case 1:
+		if(find.note_cc == 0){
+			printf("Desole cette etudiants n'a pas de note CC\n");
+			return;
+		}
+		printf("Voulez vous vraiment supprimer la note CC de cet etudiant ?[o/N] : ");
+		scanf("%c", &val);
+		fflush(stdin);
+
+		if(val == 'o' || val == 'O'){
+			find.note_cc = 0;
+			update_note(find, 1);
+			printf("La note a bien ete supprimer.\n");
+		}else{
+			printf("La note n'a pas ete supprimer.");
+		}
+		break;
+		//
+		case 2:
+		if(find.note_ds == 0){
+			printf("Desole cette etudiants n'a pas de note DS\n");
+			return;
+		}
+		printf("Voulez vous vraiment supprimer la note DS de cet etudiant ?[o/N] : ");
+		scanf("%c", &val);
+		fflush(stdin);
+
+		if(val == 'o' || val == 'O'){
+			find.note_ds = 0;
+			update_note(find, 1);
+			printf("La note a bien ete supprimer.\n");
+		}else{
+			printf("La note n'a pas ete supprimer.");
+		}
+		break;
+		//
+		case 3:
+		printf("Voulez vous vraiment supprimer la note CC de cet etudiant ?[o/N] : ");
+		scanf("%c", &val);
+		fflush(stdin);
+
+		if(val == 'o' || val == 'O'){
+			find.note_cc = 0;
+			update_note(find, 0);
+			printf("La note a bien ete supprimer.\n");
+		}else{
+			printf("La note n'a pas ete supprimer.");
+		}
+		break;
+	}
+}
+
 Note find_note(Etudiant et, Matiere mat)
 {
 	FILE *file = fopen("data/notes.csv", "r");
