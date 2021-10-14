@@ -167,6 +167,7 @@ void call_controller_collection(Classe cl, Matiere mat, unsigned int controller)
 		break;
 		//Modifier les notes
 		case 3:
+		edit_note_etudiant_classe(cl, mat, etudiants);
 		break;
 		//Supprimer les notes
 		case 4:

@@ -441,7 +441,7 @@ void edit_note_etudiant_matier(Etudiant et, Matiere mat)
 		case 1:
 		do{
 			if(bad){
-				printf("Incorrect la note de CC est comprise entre 0 et 20 ou 0 pour retourner : ");
+				printf("Incorrect la note de CC est comprise entre 0 et 20 ou 0 pour ne pas modifier : ");
 			}else{
 				bad = 1;
 				printf("Entrer la note de CC : ");
@@ -458,7 +458,7 @@ void edit_note_etudiant_matier(Etudiant et, Matiere mat)
 		case 2:
 		do{
 			if(bad){
-				printf("Incorrect la note de DS est comprise entre 0 et 20 ou 0 pour retourner : ");
+				printf("Incorrect la note de DS est comprise entre 0 et 20 ou 0 pour ne pas modifier : ");
 			}else{
 				bad = 1;
 				printf("Entrer la note de DS : ");
@@ -475,7 +475,7 @@ void edit_note_etudiant_matier(Etudiant et, Matiere mat)
 		case 3:
 		do{
 			if(bad){
-				printf("Incorrect la note de CC est comprise entre 0 et 20 ou 0 pour retourner : ");
+				printf("Incorrect la note de CC est comprise entre 0 et 20 ou 0 pour ne pas modifier : ");
 			}else{
 				bad = 1;
 				printf("Entrer la note CC : ");
@@ -488,7 +488,7 @@ void edit_note_etudiant_matier(Etudiant et, Matiere mat)
 		bad = 0;
 		do{
 			if(bad){
-				printf("Incorrect la note de DS est comprise entre 0 et 20 ou 0 pour retourner : ");
+				printf("Incorrect la note de DS est comprise entre 0 et 20 ou 0 pour ne pas modifier : ");
 			}else{
 				bad = 1;
 				printf("Entrer la note de DS : ");
@@ -516,6 +516,137 @@ void edit_note_etudiant_matier(Etudiant et, Matiere mat)
 		find.id_matiere = mat.reference;
 		save_note(find);
 	}else{ update_note(find, 1); }
+}
+
+void edit_note_etudiant_classe(Classe cl, Matiere mat, Etudiant * etudiants)
+{
+	unsigned int entier = 6, i = 0, bad = 0, val = 0;
+	Note note, find;
+	printf("Modification des notes de la classe %s pour la matiere %s\n", cl.nom, mat.libelle);
+
+	printf("Quel note voulez vous modifier ?\n");
+	printf("1. Note CC.\n");
+	printf("2. Note DS.\n");
+	printf("3. Les deux.\n");
+	printf("0. Retour.\n");
+	printf("Votre choix : ");
+	scanf("%d", &entier);
+	fflush(stdin);
+
+	switch(entier){
+		case 1:
+		while(etudiants[i].numero != 0){
+			find = find_note(etudiants[i], mat);
+			if(find.id_etudiant == 0 || find.id_matiere == 0){ i++; continue; }
+
+			print_etudiant(etudiants[i]);
+			printf("|\t Note CC : %2.2f\t\t\t|\n", find.note_cc);
+			printf("+-----------------------------------------------+\n");
+			printf("|\t Note DS : %2.2f\t\t\t|\n", find.note_ds);
+			printf("+-----------------------------------------------+\n");
+			do{
+				if(bad){
+					printf("Incorrect la note de CC est comprise entre 0 et 20 ou 0 pour ne pas modifier : ");
+				}else{
+					bad = 1;
+					printf("Entrer la note de CC : ");
+				}
+				val = scanf("%f", &note.note_cc);
+				fflush(stdin);
+				if(note.note_cc == 0) break;
+			}while(note.note_cc > 20 || note.note_cc < 0 || val != 1);
+
+			if(note.note_cc != 0)
+				find.note_cc = note.note_cc;
+
+			update_note(find, 1);
+			bad = 0;
+			i++;
+			printf("\n");
+		}
+		break;
+		case 2:
+		while(etudiants[i].numero != 0){
+			find = find_note(etudiants[i], mat);
+			if(find.id_etudiant == 0 || find.id_matiere == 0){ i++; continue; }
+
+			print_etudiant(etudiants[i]);
+			printf("|\t Note CC : %2.2f\t\t\t|\n", find.note_cc);
+			printf("+-----------------------------------------------+\n");
+			printf("|\t Note DS : %2.2f\t\t\t|\n", find.note_ds);
+			printf("+-----------------------------------------------+\n");
+			do{
+				if(bad){
+					printf("Incorrect la note de DS est comprise entre 0 et 20 ou 0 pour ne pas modifier : ");
+				}else{
+					bad = 1;
+					printf("Entrer la note de DS : ");
+				}
+				val = scanf("%f", &note.note_ds);
+				fflush(stdin);
+				if(note.note_ds == 0) break;
+			}while(note.note_ds > 20 || note.note_ds < 0 || val != 1);
+
+			if(note.note_ds != 0)
+				find.note_ds = note.note_ds;
+
+			update_note(find, 1);
+			bad = 0;
+			i++;
+			printf("\n");
+		}
+		break;
+		case 3:
+		while(etudiants[i].numero != 0){
+			find = find_note(etudiants[i], mat);
+			if(find.id_etudiant == 0 || find.id_matiere == 0){ i++; continue; }
+
+			print_etudiant(etudiants[i]);
+			printf("|\t Note CC : %2.2f\t\t\t|\n", find.note_cc);
+			printf("+-----------------------------------------------+\n");
+			printf("|\t Note DS : %2.2f\t\t\t|\n", find.note_ds);
+			printf("+-----------------------------------------------+\n");
+			do{
+				if(bad){
+					printf("Incorrect la note de CC est comprise entre 0 et 20 ou 0 pour ne pas modifier : ");
+				}else{
+					bad = 1;
+					printf("Entrer la note de CC : ");
+				}
+				val = scanf("%f", &note.note_cc);
+				fflush(stdin);
+				if(note.note_cc == 0) break;
+			}while(note.note_cc > 20 || note.note_cc < 0 || val != 1);
+
+			if(note.note_cc != 0)
+				find.note_cc = note.note_cc;
+
+			bad = 0;
+			do{
+				if(bad){
+					printf("Incorrect la note de DS est comprise entre 0 et 20 ou 0 pour ne pas modifier : ");
+				}else{
+					bad = 1;
+					printf("Entrer la note de DS : ");
+				}
+				val = scanf("%f", &note.note_ds);
+				fflush(stdin);
+				if(note.note_ds == 0) break;
+			}while(note.note_ds > 20 || note.note_ds < 0 || val != 1);
+
+			if(note.note_ds != 0)
+				find.note_ds = note.note_ds;
+
+			update_note(find, 1);
+			bad = 0;
+			i++;
+			printf("\n");
+		}
+		break;
+		default:
+		printf("Desole cette option n'est pas pris en charge.\n");
+		exit(EXIT_FAILURE);
+	}
 }
 
 Note find_note(Etudiant et, Matiere mat)
