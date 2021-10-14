@@ -209,4 +209,4 @@ void clear()
 {
 	system("cls");
 }
-//gcc app.c lib/classes/classe.c lib/classes/helper.c lib/etudiants/etudiant.c lib/etudiants/helper.c lib/matieres/matiere.c lib/matieres/helper.c lib/notes/matiere.c lib/appartenir.c lin/notes/note.c -o main
+//gcc app.c lib/classes/classe.c lib/classes/helper.c lib/etudiants/etudiant.c lib/etudiants/helper.c lib/matieres/matiere.c lib/matieres/helper.c lib/notes/matiere.c lib/appartenir.c lib/notes/note.c -o main
