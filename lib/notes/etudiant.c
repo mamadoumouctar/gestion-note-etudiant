@@ -36,6 +36,9 @@ void etudiant_note_index()
 		case 1:
 		show_all_note_etudiant(find);
 		break;
+		case 2:
+		add_all_note_etudiant(find);
+		break;
 		default:
 		printf("L'option saisie n'est pas disponible.\n");
 		exit(EXIT_FAILURE);
@@ -65,6 +68,74 @@ void show_all_note_etudiant(Etudiant et)
 
 	printf("+--------------------------------------+---------+---------+---------+-------------+---------------+\n");
 	goto_classe_find_note(et);
+}
+
+void add_all_note_etudiant(Etudiant et)
+{
+	Faire f = {0, 0};
+	Matiere mat;
+	Note note;
+	note.id_etudiant = et.numero;
+	unsigned int bad = 1, update_or_create = 0;
+	FILE *file = fopen("./data/sefaire.csv", "r");
+
+	if(file == NULL){
+		printf("L'ouverture du fichier a echoue.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	do{
+		fscanf(file, "%d,%d\n", &f.id_matiere, &f.id_classe);
+		if(et.code_classe == f.id_classe){
+			mat = find_matiere(f.id_matiere);
+			Note find = find_note(et, mat);
+			print_matiere(mat);
+			note.id_matiere = mat.reference;
+			update_or_create = 0;
+			
+			//Saisie de la note de cc
+			if(find.note_cc == 0){
+				printf("Entrer la note de CC : ");
+				GRAB_NOT_ALL_CC:
+				bad = scanf("%f", &note.note_cc);
+				fflush(stdin);
+
+				if(note.note_cc <= 0 || note.note_cc > 20) bad = 0;
+
+				if(bad == 0){
+					printf("Incorrect la note CC est comprise entre 0 et 20. Entrer la note de CC : ");
+					goto GRAB_NOT_ALL_CC;
+				}
+			}else{
+				note.note_cc = find.note_cc;
+				update_or_create = 1;
+			}
+
+			//Saisie de la note de ds
+			if(find.note_ds == 0){
+				printf("Entrer la note de DS : ");
+				GRAB_NOT_ALL_DS:
+				bad = scanf("%f", &note.note_ds);
+				fflush(stdin);
+
+				if(note.note_ds <= 0 || note.note_ds > 20) bad = 0;
+
+				if(bad == 0){
+					printf("Incorrect la note DS est comprise entre 0 et 20. Entrer la note de CC : ");
+					goto GRAB_NOT_ALL_DS;
+				}
+			}else{
+				note.note_ds = find.note_ds;
+				update_or_create = 1;
+			}
+
+			if(update_or_create)
+				update_note(note, 1);
+			else
+				save_note(note);
+		}
+	}while(!feof(file));
+	fclose(file);
 }
 
 void goto_classe_find_note(Etudiant et)

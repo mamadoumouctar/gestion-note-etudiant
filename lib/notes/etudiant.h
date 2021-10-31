@@ -6,6 +6,7 @@
 void etudiant_note_index();
 
 void show_all_note_etudiant(Etudiant);
+void add_all_note_etudiant(Etudiant);
 
 void goto_classe_find_note(Etudiant);
 
