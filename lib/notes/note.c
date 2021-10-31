@@ -728,6 +728,11 @@ void delate_note_etudiant_matier(Etudiant et, Matiere mat)
 	}
 }
 
+void delate_note_etudiant_classe(Classe cl, Matiere mat, Etudiant * etudiants)
+{
+	
+}
+
 Note find_note(Etudiant et, Matiere mat)
 {
 	FILE *file = fopen("data/notes.csv", "r");
@@ -741,6 +746,27 @@ Note find_note(Etudiant et, Matiere mat)
 	do{
 		fscanf(file, "%d,%d,%f,%f\n", &note.id_etudiant, &note.id_matiere, &note.note_cc, &note.note_ds);
 		if(note.id_etudiant == et.numero && note.id_matiere == mat.reference){
+			fclose(file);
+			return note;
+		}
+	}while(!feof(file));
+	fclose(file);
+	return null;
+}
+
+Note find_note_with_primary(unsigned int numero, unsigned int reference)
+{
+	FILE *file = fopen("data/notes.csv", "r");
+	Note note, null = {0,0,0.0,0.0};
+
+	if(file == NULL){
+		printf("L'ouverture du fichier a echoue.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	do{
+		fscanf(file, "%d,%d,%f,%f\n", &note.id_etudiant, &note.id_matiere, &note.note_cc, &note.note_ds);
+		if(note.id_etudiant == numero && note.id_matiere == reference){
 			fclose(file);
 			return note;
 		}

@@ -16,6 +16,7 @@ unsigned int get_nomber_of_matiere_with(char *);
 int get_last_reference_matiere();
 
 void find_matieres(char *, Matiere *);
+Matiere find_matiere(unsigned int);
 Matiere get_one_matiere_with(char *);
 
 void find_matieres_and_print(char *);

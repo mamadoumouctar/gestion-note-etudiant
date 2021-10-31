@@ -191,8 +191,10 @@ unsigned int matiere_seFaire(unsigned int code_classe, unsigned int reference_ma
 
 	do{
 		fscanf(file, "%d,%d\n", &f.id_matiere, &f.id_classe);
-		if(f.id_classe == code_classe && f.id_matiere == reference_matiere)
+		if(f.id_classe == code_classe && f.id_matiere == reference_matiere){
+			fclose(file);
 			return 1;
+		}
 	}while(!feof(file));
 	fclose(file);
 	return 0;

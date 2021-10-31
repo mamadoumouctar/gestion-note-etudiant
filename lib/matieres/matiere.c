@@ -128,6 +128,29 @@ void find_matieres(char *libelle, Matiere *matieres)
 	fclose(file);
 }
 
+Matiere find_matiere(unsigned int id)
+{
+	FILE *file = fopen("./data/matieres.csv", "r");
+	Matiere mat;
+	unsigned int index = 0;
+
+	if(file == NULL){
+		printf("L'ouverture du fichier a echoue.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	do{
+		fscanf(file, "%d,%[a-zA-Z0-9 ],%d\n", &mat.reference, mat.libelle, &mat.coefficient);
+		if(mat.reference == id){
+			fclose(file);
+			return mat;
+		}
+	}while(!feof(file));
+	fclose(file);
+	Matiere null = {0,"",0};
+	return null;
+}
+
 Matiere get_one_matiere_with(char *libelle)
 {
 	Matiere *matieres, mat, null = {0, "",0};

@@ -4,6 +4,7 @@
 #include "lib/etudiants/helper.h"
 #include "lib/matieres/helper.h"
 #include "lib/notes/matiere.h"
+#include "lib/notes/etudiant.h"
 
 int clavier = 0, option = 1, cache = -1;
 
@@ -190,6 +191,7 @@ void gestion_notes()
 {
 	printf("\n***Gestion des notes***\n");
 	printf("1. Gerer les notes pour une matiere\n");
+	printf("2. Gerer les notes d'un etudiant\n");
 
 	printf("Votre choix : ");
 	scanf("%d", &clavier);
@@ -198,6 +200,9 @@ void gestion_notes()
 	switch(clavier){
 		case 1:
 		matiere_note_index();
+		break;
+		case 2:
+		etudiant_note_index();
 		break;
 		default:
 		printf("L'option saisie n'est pas disponible.\n");
@@ -209,4 +214,4 @@ void clear()
 {
 	system("cls");
 }
-//gcc app.c lib/classes/classe.c lib/classes/helper.c lib/etudiants/etudiant.c lib/etudiants/helper.c lib/matieres/matiere.c lib/matieres/helper.c lib/notes/matiere.c lib/appartenir.c lib/notes/note.c -o main
+//gcc app.c lib/classes/classe.c lib/classes/helper.c lib/etudiants/etudiant.c lib/etudiants/helper.c lib/matieres/matiere.c lib/matieres/helper.c lib/notes/matiere.c lib/appartenir.c lib/notes/note.c lib/notes/etudiant.c -o main

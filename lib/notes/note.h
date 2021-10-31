@@ -23,8 +23,10 @@ void edit_note_etudiant_matier(Etudiant, Matiere);
 void edit_note_etudiant_classe(Classe, Matiere, Etudiant *);
 
 void delate_note_etudiant_matier(Etudiant, Matiere);
+void delate_note_etudiant_classe(Classe, Matiere, Etudiant *);
 
 Note find_note(Etudiant, Matiere);
+Note find_note_with_primary(unsigned int, unsigned int);
 void save_note(Note);
 void update_note(Note, unsigned int);
 unsigned int already_has_note(Etudiant, Matiere);
