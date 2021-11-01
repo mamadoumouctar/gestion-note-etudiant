@@ -137,10 +137,10 @@ void gestion_classes()
 		add_classe();
 		break;
 		case 3:
-		update_classe();
+		update_classe(NULL);
 		break;
 		case 4:
-		delate_classe();
+		delate_classe(NULL);
 		break;
 		case 5:
 		seach_classe(NULL);

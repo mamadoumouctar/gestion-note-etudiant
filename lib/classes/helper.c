@@ -93,7 +93,7 @@ void add_classe()
 	printf("+-----------------------------------------------+\n");
 }
 
-void update_classe()
+void update_classe(char *name)
 {
 	char nom[31];
 	unsigned short int bad = 0;
@@ -173,24 +173,28 @@ void update_classe()
 	save_update_classe(find);
 }
 
-void delate_classe()
+void delate_classe(char *name)
 {
 	char nom[31], rep;
 	unsigned short int bad = 0;
 
-	printf("***Suppression de classe***\n");	
+	if(name == NULL){
+		printf("***Suppression de classe***\n");	
 
-	GRAB_NOM_CLASSE_DELATE:
-	if(bad == 0){
-		bad = 1;
-		printf("Entrer le nom de la classe a Supprimer svp ou 0 pour retourner : ");
+		GRAB_NOM_CLASSE_DELATE:
+		if(bad == 0){
+			bad = 1;
+			printf("Entrer le nom de la classe a Supprimer svp ou 0 pour retourner : ");
+		}else{
+			printf("Cette classe n'existe pas. entrer une classe existante svp : ");
+		}
+		scanf("%20[a-zA-Z0-9 ]", nom);
+		fflush(stdin);
+
+		if(strcmp(nom, "0") == 0) return;
 	}else{
-		printf("Cette classe n'existe pas. entrer une classe existante svp : ");
+		strcpy(nom, name);
 	}
-	scanf("%20[a-zA-Z0-9 ]", nom);
-	fflush(stdin);
-
-	if(strcmp(nom, "0") == 0) return;
 
 	Classe find = find_classe_with_nom(nom);
 	if(find.code == 0)
@@ -343,4 +347,25 @@ void gestion_etudiants_classe(Classe *cl)
 		printf("L'option saisie n'est pas disponible.\n");
 	}
 
+}
+
+void gestion_classe(Classe *cl)
+{
+	unsigned int entier = 0;
+	system("cls");
+
+	printf("1. Modifier la classe.");
+	printf("2. Supprimer la classe.");
+	printf("0. Pour retourner.");
+
+	printf("Votre choix : ");
+	scanf("%d", &entier);
+
+	switch(entier){
+		case 1:
+
+		break;
+		default:
+		printf("L'option saisie n'est pas disponible.\n");
+	}
 }
