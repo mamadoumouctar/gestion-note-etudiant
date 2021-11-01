@@ -26,7 +26,8 @@ void etudiant_note_index()
 	print_etudiant(find);
 	printf("\n");
 
-	printf("1. Afficher toute les notes de l'etudiant dans toute ses matieres\n");
+	printf("1. Afficher toute les notes de l'etudiant dans toute ses matieres.\n");
+	printf("2. Ajouter toute les notes de l'etudiant qui n'ont pas ete renseigner.\n");
 
 	printf("Votre choix : ");
 	scanf("%d", &entier);
@@ -89,9 +90,11 @@ void add_all_note_etudiant(Etudiant et)
 		if(et.code_classe == f.id_classe){
 			mat = find_matiere(f.id_matiere);
 			Note find = find_note(et, mat);
-			print_matiere(mat);
 			note.id_matiere = mat.reference;
 			update_or_create = 0;
+
+			if(find.note_cc == 0 | find.note_ds == 0)
+				print_matiere(mat);
 			
 			//Saisie de la note de cc
 			if(find.note_cc == 0){
@@ -158,7 +161,8 @@ void goto_classe_find_note(Etudiant et)
 		if(et.code_classe == f.id_classe){
 			note = find_note_with_primary(et.numero, f.id_matiere);
 			mat = find_matiere(f.id_matiere);
-			moyennes += moyenne = (note.note_cc + note.note_ds) / 2;
+			moyenne = (note.note_cc + note.note_ds) / 2;
+			moyennes += moyenne * mat.coefficient;
 			coefs += mat.coefficient;
 			printf("| %-35s  |", mat.libelle);
 			if(note.note_cc < 10)
