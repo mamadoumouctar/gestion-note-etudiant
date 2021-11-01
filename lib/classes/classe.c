@@ -67,6 +67,7 @@ void save_classe()
 	int last_code = get_last_code_classe() + 1;
 	set_code_classe(last_code);
 	fprintf(file, "%d,%s,%s\n", get_code_classe(), get_nom_classe(), get_niveau_classe());
+	fclose(file);
 }
 
 void save_update_classe(Classe save)

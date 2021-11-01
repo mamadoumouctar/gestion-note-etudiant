@@ -97,18 +97,22 @@ void update_classe(char *name)
 {
 	char nom[31];
 	unsigned short int bad = 0;
-	printf("***Modification d'une classe***\n");
+	if(name == NULL){
+		printf("***Modification d'une classe***\n");
 
-	GRAB_NOM_CLASSE_EDIT:
-	if(bad == 0){
-		bad = 1;
-		printf("Entrer le nom de la classe a modifier svp : ");
-		scanf("%20[a-zA-Z0-9 ]", nom);
-		fflush(stdin);
+		GRAB_NOM_CLASSE_EDIT:
+		if(bad == 0){
+			bad = 1;
+			printf("Entrer le nom de la classe a modifier svp : ");
+			scanf("%20[a-zA-Z0-9 ]", nom);
+			fflush(stdin);
+		}else{
+			printf("Cette classe n'existe pas. entrer une classe existante svp : ");
+			scanf("%[a-zA-Z0-9 ]", nom);
+			fflush(stdin);
+		}
 	}else{
-		printf("Cette classe n'existe pas. entrer une classe existante svp : ");
-		scanf("%[a-zA-Z0-9 ]", nom);
-		fflush(stdin);
+		strcpy(nom, name);
 	}
 
 	Classe find = find_classe_with_nom(nom);
@@ -213,9 +217,12 @@ void delate_classe(char *name)
 
 	printf("Etes vous sure de vouloir Supprimer Cette classe ? [o/N] : ");
 	scanf("%c", &rep);
+	fflush(stdin);
 
-	if(rep == 'o' || rep == '0')
+	if(rep == 'o' || rep == '0'){
+		printf("La classe a bien ete supprimer.\n");
 		save_delated_classe(find);
+	}
 }
 
 Classe find_classe_with_code(int code)
@@ -297,6 +304,7 @@ void seach_classe(char *nom_classe)
 		printf("+--------+-------------------------------+---------------------+---------------------+-------------------+\n");
 		//print_etudiant(etudiants[i]);
 	}
+	free(etudiants);
 
 	AUTHER_SYSTEM:
 	printf("\n");
@@ -312,9 +320,10 @@ void seach_classe(char *nom_classe)
 		case 1:
 		gestion_etudiants_classe(&find);
 		break;
+		case 2:
+		gestion_classe(&find);
+		break;
 	}
-
-	free(etudiants);
 }
 
 void gestion_etudiants_classe(Classe *cl)
@@ -354,16 +363,23 @@ void gestion_classe(Classe *cl)
 	unsigned int entier = 0;
 	system("cls");
 
-	printf("1. Modifier la classe.");
-	printf("2. Supprimer la classe.");
-	printf("0. Pour retourner.");
+	printf("1. Modifier la classe.\n");
+	printf("2. Supprimer la classe.\n");
+	printf("0. Pour retourner.\n");
 
 	printf("Votre choix : ");
 	scanf("%d", &entier);
+	fflush(stdin);
 
 	switch(entier){
 		case 1:
-
+		update_classe(cl->nom);
+		break;
+		case 2:
+		delate_classe(cl->nom);
+		break;
+		case 0: case 3:
+		seach_classe(cl->nom);
 		break;
 		default:
 		printf("L'option saisie n'est pas disponible.\n");

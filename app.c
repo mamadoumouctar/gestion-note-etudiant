@@ -17,6 +17,7 @@ void gestion_notes();
 int main(int argc, char const *argv[])
 {
 	START_APP:
+	system("color 0f");
 	clear();
 	printf("Application de gestion d'etudiant.\n");
 
@@ -31,19 +32,24 @@ int main(int argc, char const *argv[])
 	fflush(stdin);
 
 	OPTION:
+	system("color 0f");
 	clear();
 	cache = clavier;
 	switch(clavier){
 		case 1:
+		system("color 3f");
 		gestion_etudiants();
 		break;
 		case 2:
+		system("color 5f");
 		gestion_classes();
 		break;
 		case 3:
+		system("color 8f");
 		gestion_matieres();
 		break;
 		case 4:
+		system("color 1f");
 		gestion_notes();
 		break;
 		case 9:
