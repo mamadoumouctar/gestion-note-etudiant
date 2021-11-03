@@ -38,5 +38,6 @@ int grab_niveau_classe();
 
 Classe find_classe_with_nom(char nom[31]);
 Classe find_classe_from_etudiant(unsigned int);
+Classe find_classe_from_primary(unsigned int);
 
 #endif

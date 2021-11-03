@@ -254,3 +254,32 @@ Classe find_classe_from_etudiant(unsigned int code_classe)
 
 	return ret;
 }
+
+Classe find_classe_from_primary(unsigned int code)
+{
+	FILE *file = fopen("data/classes.csv", "r");
+	Classe cl;
+	char niveau[10];
+
+	if(file == NULL){
+		printf("L'ouverture du fichier a echoue.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	do{
+		fscanf(file, "%3d,%20[a-zA-Z0-9 ],%8s", &cl.code, cl.nom, niveau);
+		if(cl.code == code){
+			if(strcmp(niveau, "LICENCE") == 0)
+				cl.niveau = 0;
+			else if(strcmp(niveau, "MASTER") == 0)
+				cl.niveau = 1;
+			else
+				cl.niveau = -1;
+			fclose(file);
+			return cl;
+		}
+	}while(!feof(file));
+
+	fclose(file);
+	return new_classe();
+}

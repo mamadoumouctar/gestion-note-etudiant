@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "matiere.h"
+#include "../classes/classe.h"
+#include "../notes/matiere.h"
 
 void view_matiere()
 {
@@ -156,6 +158,43 @@ void delate_matiere()
 	}
 }
 
+
+void seach_matiere_future(Matiere mat)
+{
+	FILE *file = fopen("data/sefaire.csv", "r");
+	unsigned short int it = 0;
+	Classe cl;
+	Faire f;
+	char niveau[10];
+
+	if(file == NULL){
+		printf("L'ouverture du fichier a echoue.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	printf("Liste des classes dans les quelles on trouve cette matiere.\n");
+	printf("+------+---------------------+----------+\n");
+	printf("| Code |  Nom                |  Niveau  |\n");
+	printf("+------+---------------------+----------+\n");
+	do{
+		fscanf(file, "%d,%d\n", &f.id_matiere, &f.id_classe);
+		if(f.id_matiere == mat.reference){
+			it = 1;
+			cl = find_classe_from_primary(f.id_classe);
+			if(cl.niveau)
+				strcpy(niveau, "MASTER");
+			else
+				strcpy(niveau, "LICENCE");
+			printf("|  %3d | %-20s| %-9s|\n", cl.code, cl.nom, niveau);
+			printf("+------+---------------------+----------+\n");
+		}
+	}while(!feof(file));
+	fclose(file);
+	if(!it){
+		printf("Desole cette matiere n'a pas encore de classe.\n");
+	}
+}
+
 void seach_matiere()
 {
 	printf("***Seach Matiere***\n");
@@ -173,4 +212,6 @@ void seach_matiere()
 	}else{
 		printf("Desole cette matiere n'existe pas encore.\n");
 	}
+
+	seach_matiere_future(mat);
 }
