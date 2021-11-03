@@ -17,6 +17,8 @@ Classe new_classe_from_file(FILE *file)
 	char niveau[8];
 	fscanf(file, "%3d,%20[a-zA-Z0-9 ],%8s\n", &cl.code, cl.nom, niveau);
 	set_niveau_classe_s(niveau);
+
+	return cl;
 }
 
 int get_last_code_classe()

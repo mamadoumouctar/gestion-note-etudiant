@@ -17,7 +17,7 @@ void print_note(Note note)
 
 void print_note_etudiant_matiere(Etudiant et, Matiere mat)
 {
-	unsigned int entier = 6;
+	int entier = 6;
 	printf("Quel note voulez vous afficher ?\n");
 	printf("1. Note CC.\n");
 	printf("2. Note DS.\n");
@@ -123,7 +123,7 @@ void print_note_etudiant_matiere(Etudiant et, Matiere mat)
 
 void print_note_etudiants_classe(Classe cl, Matiere mat, Etudiant * etudiants)
 {
-	unsigned int entier = 6, i = 0;
+	int entier = 6, i = 0;
 	printf("Quel note voulez vous afficher ?\n");
 	printf("1. Note CC.\n");
 	printf("2. Note DS.\n");
@@ -242,7 +242,7 @@ void add_note_etudiant_matiere(Etudiant et, Matiere mat)
 		printf("Desole cette etudiants a deja une note dans cette matiere.");
 		return;
 	}
-	unsigned int entier = 6, bad = 0;
+	int entier = 6, bad = 0;
 	printf("Quel note voulez vous afficher ?\n");
 	printf("1. Note CC.\n");
 	printf("2. Note DS.\n");
@@ -321,7 +321,7 @@ void add_note_etudiant_matiere(Etudiant et, Matiere mat)
 
 void add_note_etudiant_classe(Classe cl, Matiere mat, Etudiant * etudiants)
 {
-	unsigned int entier = 6, i = 0, bad = 0, val = 0;
+	int entier = 6, i = 0, bad = 0, val = 0;
 	printf("Quel note voulez vous afficher ?\n");
 	printf("1. Note CC.\n");
 	printf("2. Note DS.\n");
@@ -420,11 +420,11 @@ void add_note_etudiant_classe(Classe cl, Matiere mat, Etudiant * etudiants)
 
 void edit_note_etudiant_matier(Etudiant et, Matiere mat)
 {
-	unsigned int has_not_note = -1;
+	int has_not_note = -1;
 	if(has_not_note = !already_has_note(et, mat)){
 		printf("Desole cette etudiants n'a pas de note pour cette matiere. vous allez le rajouter une note.\n");
 	}
-	unsigned int entier = 6, bad = 0, val = 0;
+	int entier = 6, bad = 0, val = 0;
 	printf("Quel note voulez vous afficher ?\n");
 	printf("1. Note CC.\n");
 	printf("2. Note DS.\n");
@@ -520,7 +520,7 @@ void edit_note_etudiant_matier(Etudiant et, Matiere mat)
 
 void edit_note_etudiant_classe(Classe cl, Matiere mat, Etudiant * etudiants)
 {
-	unsigned int entier = 6, i = 0, bad = 0, val = 0;
+	int entier = 6, i = 0, bad = 0, val = 0;
 	Note note, find;
 	printf("Modification des notes de la classe %s pour la matiere %s\n", cl.nom, mat.libelle);
 
@@ -652,7 +652,7 @@ void edit_note_etudiant_classe(Classe cl, Matiere mat, Etudiant * etudiants)
 void delate_note_etudiant_matier(Etudiant et, Matiere mat)
 {
 	system("cls");
-	unsigned int has_not_note = -1;
+	int has_not_note = -1;
 	Note find = find_note(et, mat);
 	printf("Suppression de la note de l'etudiant %s %s pour la matiere %s\n", et.nom, et.prenom, mat.libelle);
 	if(has_not_note = (find.note_cc == 0 && find.note_ds == 0)){
@@ -665,7 +665,7 @@ void delate_note_etudiant_matier(Etudiant et, Matiere mat)
 	printf("|\t Note DS : %2.2f\t\t\t|\n", find.note_ds);
 	printf("+-----------------------------------------------+\n");
 
-	unsigned int entier = 6, bad = 0, val = 0;
+	int entier = 6, val = 0;
 	printf("Quel note voulez vous supprimer ?\n");
 	printf("1. Note CC.\n");
 	printf("2. Note DS.\n");
@@ -682,7 +682,7 @@ void delate_note_etudiant_matier(Etudiant et, Matiere mat)
 			return;
 		}
 		printf("Voulez vous vraiment supprimer la note CC de cet etudiant ?[o/N] : ");
-		scanf("%c", &val);
+		scanf("%d", &val);
 		fflush(stdin);
 
 		if(val == 'o' || val == 'O'){
@@ -700,7 +700,7 @@ void delate_note_etudiant_matier(Etudiant et, Matiere mat)
 			return;
 		}
 		printf("Voulez vous vraiment supprimer la note DS de cet etudiant ?[o/N] : ");
-		scanf("%c", &val);
+		scanf("%d", &val);
 		fflush(stdin);
 
 		if(val == 'o' || val == 'O'){
@@ -714,7 +714,7 @@ void delate_note_etudiant_matier(Etudiant et, Matiere mat)
 		//
 		case 3:
 		printf("Voulez vous vraiment supprimer la note CC de cet etudiant ?[o/N] : ");
-		scanf("%c", &val);
+		scanf("%d", &val);
 		fflush(stdin);
 
 		if(val == 'o' || val == 'O'){
@@ -754,7 +754,7 @@ Note find_note(Etudiant et, Matiere mat)
 	return null;
 }
 
-Note find_note_with_primary(unsigned int numero, unsigned int reference)
+Note find_note_with_primary(int numero, int reference)
 {
 	FILE *file = fopen("data/notes.csv", "r");
 	Note note, null = {0,0,0.0,0.0};
@@ -791,7 +791,7 @@ void save_note(Note note)
  * si edit_or_delate est 0 on supprime
  * si edit_or_delate est 1 on modifie
 */
-void update_note(Note note, unsigned int edit_or_delate)
+void update_note(Note note, int edit_or_delate)
 {
 	FILE *file = fopen("data/notes.csv", "r"), *tmp = fopen("data/tmp.csv", "a");
 	Note bin;
@@ -818,7 +818,7 @@ void update_note(Note note, unsigned int edit_or_delate)
 	rename("./data/tmp.csv", "./data/notes.csv");
 }
 
-unsigned int already_has_note(Etudiant et, Matiere mat)
+int already_has_note(Etudiant et, Matiere mat)
 {
 	FILE *file = fopen("data/notes.csv", "r");
 	Note note;

@@ -53,7 +53,7 @@ void save_matiere(Matiere mat)
  * si edit_or_delate est 0 on supprime
  * si edit_or_delate est 1 on modifie
 */
-void update_matiere(Matiere update, unsigned short int edit_or_update)
+void update_matiere(Matiere update, int edit_or_update)
 {
 	FILE *file = NULL, *tmp = NULL;
 	Matiere mat;
@@ -84,11 +84,11 @@ void update_matiere(Matiere update, unsigned short int edit_or_update)
 	rename("./data/tmp.csv", "./data/matieres.csv");
 }
 
-unsigned int get_nomber_of_matiere_with(char * libelle)
+int get_nomber_of_matiere_with(char * libelle)
 {
 	FILE *file = fopen("./data/matieres.csv", "r");
 	Matiere mat;
-	unsigned int index = 0;
+	int index = 0;
 
 	if(file == NULL){
 		printf("L'ouverture du fichier a echoue.\n");
@@ -111,7 +111,7 @@ void find_matieres(char *libelle, Matiere *matieres)
 {
 	FILE *file = fopen("./data/matieres.csv", "r");
 	Matiere mat;
-	unsigned int index = 0;
+	int index = 0;
 
 	if(file == NULL){
 		printf("L'ouverture du fichier a echoue.\n");
@@ -128,11 +128,10 @@ void find_matieres(char *libelle, Matiere *matieres)
 	fclose(file);
 }
 
-Matiere find_matiere(unsigned int id)
+Matiere find_matiere(int id)
 {
 	FILE *file = fopen("./data/matieres.csv", "r");
 	Matiere mat;
-	unsigned int index = 0;
 
 	if(file == NULL){
 		printf("L'ouverture du fichier a echoue.\n");
@@ -153,8 +152,8 @@ Matiere find_matiere(unsigned int id)
 
 Matiere get_one_matiere_with(char *libelle)
 {
-	Matiere *matieres, mat, null = {0, "",0};
-	unsigned int index, entier = 0;
+	Matiere *matieres, mat;
+	int index, entier = 0;
 
 	index = get_nomber_of_matiere_with(libelle);
 	matieres = malloc(sizeof(Matiere) * index);
@@ -197,7 +196,7 @@ Matiere get_one_matiere_with(char *libelle)
 void find_matieres_and_print(char *libelle)
 {
 	FILE *file = fopen("./data/matieres.csv", "r");
-	unsigned short int nomber = 0;
+	int nomber = 0;
 	Matiere mat;
 
 	if(file == NULL){

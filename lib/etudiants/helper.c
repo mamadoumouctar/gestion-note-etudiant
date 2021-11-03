@@ -8,6 +8,7 @@
 
 void view_etudiants()
 {
+	system("cls");
 	printf("***Liste de tout les etudiants***\n");
 	Etudiant et;
 	FILE *file = fopen("./data/etudiants.csv", "r");
@@ -45,10 +46,11 @@ void view_etudiants()
 
 void add_etudiant()
 {
+	system("cls");
 	printf("***Ajout d'un etudiant***\n");
 
 	Etudiant et = new_etudiant(0, "", "", "", new_date(0, 0, 0));
-	unsigned int entier = 0, bad = 0;
+	int entier = 0, bad = 0;
 	char chaine[32];
 
 	//saisie du nom
@@ -178,9 +180,9 @@ void delate_etudiant(char *mail)
 	printf("***Suppresion d'un etudiant***\n");
 	Etudiant find;
 	char chaine[31];
-	unsigned int entier = 0, bad = 0;
 
 	if(mail == NULL){
+		system("cls");
 		printf("Entrer l'email de l'etudiant a Supprimer : ");
 		GRAB_EMAIL_ETUDIANT_DELATE:
 		scanf("%20s", chaine);
@@ -222,12 +224,13 @@ void delate_etudiant(char *mail)
 
 void edit_etudiant(char *mail)
 {
-	printf("***Modification d'un etudiant***\n");
 	Etudiant find;
 	char chaine[32];
-	unsigned short int bad = 0, entier = 0;
+	int bad = 0, entier = 0;
 
 	if(mail == NULL){
+		system("cls");
+		printf("***Modification d'un etudiant***\n");
 		printf("Entrer l'email de l'etudiant a modifier : ");
 		GRAB_EMAIL_ETUDIANT_EDIT:
 		scanf("%20s", chaine);
@@ -400,9 +403,10 @@ void edit_etudiant(char *mail)
 
 void seach_etudiant()
 {
+	system("cls");
 	printf("***Rechercher un etudiant***\n");
 	char chaine[21];
-	unsigned int entier = 0;
+	int entier = 0;
 
 	printf("Entrer l'email de l'etudiant a rechercher ou 0 pour retourner : ");
 	scanf("%[a-zA-Z0-9@.]", chaine);
@@ -454,8 +458,7 @@ void seach_etudiant()
 
 void update_etudiant_classe(Etudiant *et)
 {
-	unsigned int entier = 0;
-	char chaine[32]; 
+	char chaine[32];
 
 	printf("Entrer le nom de la classe a associe : ");
 	GRAB_update_etudiant_classe:

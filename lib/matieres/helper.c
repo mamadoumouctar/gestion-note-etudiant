@@ -7,6 +7,7 @@
 
 void view_matiere()
 {
+	system("cls");
 	printf("***Liste de toute les matiers***\n");
 	FILE *file = fopen("./data/matieres.csv", "r");
 
@@ -31,6 +32,7 @@ void view_matiere()
 
 void add_matiere()
 {
+	system("cls");
 	printf("***Ajout d'une nouvelle matiere***\n");
 
 	FILE *file = fopen("./data/matieres.csv", "a");
@@ -42,7 +44,7 @@ void add_matiere()
 
 	Matiere mat;
 	char chaine[16];
-	unsigned short int entier = 0, bad = 0;
+	int entier = 0, bad = 0;
 
 	printf("Entrer le libelle de la matiere : ");
 	GRAB_LIBELLE_ADD:
@@ -71,8 +73,9 @@ void add_matiere()
 
 void edit_matiere()
 {
+	system("cls");
 	printf("***Modification d'une matiere***\n");
-	unsigned short int entier = 0, bad = 0;
+	int entier = 0, bad = 0;
 	char chaine[16];
 
 	printf("Entrer le libelle de la matiere a modifier : ");
@@ -127,8 +130,8 @@ void edit_matiere()
 
 void delate_matiere()
 {
+	system("cls");
 	printf("***Suppression d'une matiere***\n");
-	unsigned int entier = 0, bad = 0;
 	char chaine[31];
 
 
@@ -166,7 +169,7 @@ void delate_matiere()
 void seach_matiere_future(Matiere mat)
 {
 	FILE *file = fopen("data/sefaire.csv", "r");
-	unsigned short int it = 0;
+	int it = 0;
 	Classe cl;
 	Faire f;
 	char niveau[10];
@@ -197,12 +200,35 @@ void seach_matiere_future(Matiere mat)
 	if(!it){
 		printf("Desole cette matiere n'a pas encore de classe.\n");
 	}
+
+	printf("1. Rajouter une classe.\n");
+	printf("2. Retirer une classe.\n");
+	printf("0. Retourner\n");
+
+	int entier = 0;
+	printf("Votre choix : ");
+	scanf("%d", &entier);
+	fflush(stdin);
+
+	switch(entier){
+		case 1:
+		add_matiere_to_classe(mat);
+		break;
+		case 2:
+		disadd_matiere_to_classe(mat);
+		break;
+		case 0:
+		return;
+		default:
+		printf("L'option saisie n'est pas disponible.\n");
+		exit(EXIT_FAILURE);
+	}
 }
 
 void seach_matiere()
 {
+	system("cls");
 	printf("***Seach Matiere***\n");
-	unsigned int entier = 0, bad = 0;
 	char chaine[31];
 
 	printf("Entrer le libelle libelle de la matiere a rechercher : ");
@@ -215,6 +241,7 @@ void seach_matiere()
 		print_matiere(mat);
 	}else{
 		printf("Desole cette matiere n'existe pas encore.\n");
+		return;
 	}
 
 	seach_matiere_future(mat);

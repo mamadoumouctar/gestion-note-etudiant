@@ -27,7 +27,7 @@ int main(int argc, char const *argv[])
 	printf("4. Gestion des notes.\n");
 	printf("9. Pour Fermer le programme.\n");
 
-	printf(": ");
+	printf("Votre choix : ");
 	scanf("%d", &clavier);
 	fflush(stdin);
 

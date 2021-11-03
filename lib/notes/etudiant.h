@@ -10,7 +10,7 @@ void add_all_note_etudiant(Etudiant);
 
 void goto_classe_find_note(Etudiant);
 
-char *get_appreciation(unsigned int);
-unsigned int linked_to_note(unsigned int);
+char *get_appreciation(int);
+int linked_to_note(int);
 
 #endif

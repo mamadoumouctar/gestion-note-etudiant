@@ -10,6 +10,7 @@ int last = -1;
 
 void view_classes()
 {
+	system("cls");
 	FILE *file;
 	file = fopen("./data/classes.csv", "r");
 
@@ -17,8 +18,6 @@ void view_classes()
 		printf("L'ouverture du fichier a echoue!\n");
 		exit(1);
 	}
-
-	Classe cl = {0, "", LICENCE};
 
 	printf("\n***Liste de toute les classes****\n\n");
 
@@ -42,8 +41,8 @@ void view_classes()
 
 void add_classe()
 {
-	Classe cl = new_classe();
-	unsigned short int niveau = 0, bad = 0;
+	system("cls");
+	int niveau = 0, bad = 0;
 
 	printf("\n***Ajout une classe***\n\n");
 
@@ -97,7 +96,7 @@ void add_classe()
 void update_classe(char *name)
 {
 	char nom[31];
-	unsigned short int bad = 0;
+	int bad = 0;
 	if(name == NULL){
 		printf("***Modification d'une classe***\n");
 
@@ -181,9 +180,10 @@ void update_classe(char *name)
 void delate_classe(char *name)
 {
 	char nom[31], rep;
-	unsigned short int bad = 0;
+	int bad = 0;
 
 	if(name == NULL){
+		system("cls");
 		printf("***Suppression de classe***\n");	
 
 		GRAB_NOM_CLASSE_DELATE:
@@ -248,15 +248,18 @@ Classe find_classe_with_code(int code)
 	}while(!feof(file));
 
 	fclose(file);
+
+	return cl;
 }
 
 void seach_classe(char *nom_classe)
 {
 	char chaine[31];
-	unsigned int entier = 0;
+	int entier = 0;
 	Etudiant * etudiants;
 
 	if(nom_classe == NULL){
+		system("cls");
 		printf("***Rechercher une classe***\n");
 
 		printf("Entrer le nom de la classe a rechercher : ");
@@ -291,7 +294,7 @@ void seach_classe(char *nom_classe)
 	printf("+--------+-------------------------------+---------------------+---------------------+-------------------+\n");
 	printf("| Numero |  Nom                          | Prenom              | Email               | Date de naissance |\n");
 	printf("+--------+-------------------------------+---------------------+---------------------+-------------------+\n");
-	for(unsigned int i = 0; i < max; i++){
+	for(int i = 0; i < max; i++){
 		printf("|  %3d   | %-30s| %-20s| %-20s| ", etudiants[i].numero, etudiants[i].nom, etudiants[i].prenom, etudiants[i].email);
 		if(etudiants[i].naissance.jj < 10)
 			printf("0%1d", etudiants[i].naissance.jj);
@@ -333,8 +336,7 @@ void seach_classe(char *nom_classe)
 
 void gestion_etudiants_classe(Classe *cl)
 {
-	unsigned int entier = 0;
-	system("cls");
+	int entier = 0;
 
 	printf("Gestion des etudiants de la classe %s.\n", cl->nom);
 	printf("\n");
@@ -365,7 +367,7 @@ void gestion_etudiants_classe(Classe *cl)
 
 void gestion_classe(Classe *cl)
 {
-	unsigned int entier = 0;
+	int entier = 0;
 	system("cls");
 
 	printf("1. Modifier la classe.\n");

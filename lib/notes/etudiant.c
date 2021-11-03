@@ -10,7 +10,7 @@
 void etudiant_note_index()
 {
 	char chaine[31];
-	unsigned int entier = 0;
+	int entier = 0;
 	printf("Entrer l'email de l'etudiant : ");
 	GRAB_ET_NOTE_NOTE:
 	scanf("%s",chaine);
@@ -48,7 +48,9 @@ void etudiant_note_index()
 
 void show_all_note_etudiant(Etudiant et)
 {
+	system("cls");
 	printf("\n");
+	printf("\t Universite Virtuelle De MAF \n");
 	printf("\n");
 	printf("+--------------------------------------------------------------------------------------------------+\n");
 	printf("| Prenom et Nom : %20s %-30s                              |\n", et.prenom, et.nom);
@@ -77,7 +79,7 @@ void add_all_note_etudiant(Etudiant et)
 	Matiere mat;
 	Note note;
 	note.id_etudiant = et.numero;
-	unsigned int bad = 1, update_or_create = 0;
+	int bad = 1, update_or_create = 0;
 	FILE *file = fopen("./data/sefaire.csv", "r");
 
 	if(file == NULL){
@@ -93,7 +95,7 @@ void add_all_note_etudiant(Etudiant et)
 			note.id_matiere = mat.reference;
 			update_or_create = 0;
 
-			if(find.note_cc == 0 | find.note_ds == 0)
+			if((find.note_cc == 0) | (find.note_ds == 0))
 				print_matiere(mat);
 			
 			//Saisie de la note de cc
@@ -146,7 +148,7 @@ void goto_classe_find_note(Etudiant et)
 	Faire f = {0, 0};
 	Matiere mat;
 	Note note;
-	unsigned int coefs = 0;
+	int coefs = 0;
 	float moyenne, moyennes;
 	FILE *file = fopen("./data/sefaire.csv", "r");
 
@@ -181,12 +183,12 @@ void goto_classe_find_note(Etudiant et)
 			printf("+--------------------------------------+---------+---------+---------+-------------+---------------+\n");
 		}
 	}while(!feof(file));
-	printf("Moyenne : %f\n", moyennes);
-	printf("coefs %d\n", coefs);
+	printf("Moyenne : %f\n", moyennes / coefs);
+	printf("Mention : %s\n", get_appreciation(moyennes / coefs));
 	fclose(file);
 }
 
-char *get_appreciation(unsigned int moyenne)
+char *get_appreciation(int moyenne)
 {
 	if(moyenne < 10)
 		return "Insuffisant";
@@ -200,9 +202,10 @@ char *get_appreciation(unsigned int moyenne)
 		return "Tres Bien";
 	if(moyenne <= 20)
 		return "Excellent";
+	return "";
 }
 
-unsigned int linked_to_note(unsigned int numero)
+int linked_to_note(int numero)
 {
 	FILE *file = fopen("data/notes.csv", "r");
 	Note note;

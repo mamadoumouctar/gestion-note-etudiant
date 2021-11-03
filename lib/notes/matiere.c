@@ -7,12 +7,11 @@
 #include "note.h"
 
 char chaine[31];
-unsigned int entier = 0;
+int entier = 0;
 
 void matiere_note_index()
 {
-	unsigned int entier = 0;
-	unsigned int controller = 0, action = 0;
+	int controller = 0, action = 0;
 
 	printf("Entrer le nom de la matiere : ");
 	GRAB_PREVENT_FIND_NULL:
@@ -61,9 +60,9 @@ void matiere_note_index()
 	call_controller(find, controller, action);
 }
 
-void call_controller(Matiere mat, unsigned int controller, unsigned int action)
+void call_controller(Matiere mat, int controller, int action)
 {
-	unsigned int entier = 0;
+	int entier = 0;
 	char chaine[31];
 
 	if(action == 1){
@@ -105,7 +104,7 @@ void call_controller(Matiere mat, unsigned int controller, unsigned int action)
 				printf("\n");
 
 				printf("Voulez vous la rajouter[O/n] : ");
-				scanf("%c", &entier);
+				scanf("%d", &entier);
 				fflush(stdin);
 				if(entier == 'O' || entier == 'o'){
 					//On rajoute la matiere a la classe
@@ -122,7 +121,7 @@ void call_controller(Matiere mat, unsigned int controller, unsigned int action)
 	}
 }
 
-void call_controller_item(Etudiant et, Matiere mat, unsigned int controller)
+void call_controller_item(Etudiant et, Matiere mat, int controller)
 {
 	switch (controller){
 		//Afficher les notes
@@ -147,11 +146,11 @@ void call_controller_item(Etudiant et, Matiere mat, unsigned int controller)
 	}
 }
 
-void call_controller_collection(Classe cl, Matiere mat, unsigned int controller)
+void call_controller_collection(Classe cl, Matiere mat, int controller)
 {
 	//on recupere les etudiants qui sont dans cette classe
 	Etudiant *etudiants = malloc(sizeof(Etudiant) * 10);
-	unsigned int max = find_etudiant_from_classe(cl.code, etudiants);
+	find_etudiant_from_classe(cl.code, etudiants);
 	/*for(int i = 0; i < 10; i++){
 		if(etudiants[i].numero)
 			print_etudiant(etudiants[i]);
@@ -179,7 +178,7 @@ void call_controller_collection(Classe cl, Matiere mat, unsigned int controller)
 	}
 }
 
-unsigned int matiere_seFaire(unsigned int code_classe, unsigned int reference_matiere)
+int matiere_seFaire(int code_classe, int reference_matiere)
 {
 	Faire f = {0, 0};
 	FILE *file = fopen("./data/sefaire.csv", "r");
@@ -200,7 +199,7 @@ unsigned int matiere_seFaire(unsigned int code_classe, unsigned int reference_ma
 	return 0;
 }
 
-unsigned int linked_to_classes(unsigned int reference)
+int linked_to_classes(int reference)
 {
 	Faire f = {0, 0};
 	FILE *file = fopen("./data/sefaire.csv", "r");
@@ -221,7 +220,7 @@ unsigned int linked_to_classes(unsigned int reference)
 	return 0;
 }
 
-unsigned int linked_to_matieres(unsigned int code)
+int linked_to_matieres(int code)
 {
 	Faire f = {0, 0};
 	FILE *file = fopen("./data/sefaire.csv", "r");
@@ -248,7 +247,7 @@ unsigned int linked_to_matieres(unsigned int code)
 * op = 1 modification
 * op = 2 suppression
 */
-void update_sefaire(Faire update, unsigned int op)
+void update_sefaire(Faire update, int op)
 {
 	Faire bin = {0, 0};
 	if(op == 0){
@@ -277,5 +276,81 @@ void update_sefaire(Faire update, unsigned int op)
 		}while(!feof(file));
 		fclose(file);
 		fclose(tmp);
+
+		remove("data/sefaire.csv");
+		rename("data/tmp.csv", "data/sefaire.csv");
 	}
+}
+
+int class_appedd_to_matiere(Classe cl, Matiere mat)
+{
+	Faire f = {0,0};
+	FILE *file = fopen("data/sefaire.csv", "r");
+
+	if(file == NULL){
+		printf("L'ouverture du fichier a echoue.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	do{
+		fscanf(file, "%d,%d\n", &f.id_matiere, &f.id_classe);
+		if(f.id_classe == cl.code && f.id_matiere == mat.reference){
+			fclose(file);
+			return 1;
+		}
+	}while(!feof(file));
+	fclose(file);
+	return 0;
+}
+
+void add_matiere_to_classe(Matiere mat)
+{
+	char nom[31];
+	printf("Entrer le nom de la classe : ");
+	GRAB_TO_:
+	scanf("%s", nom);
+	fflush(stdin);
+
+	if(!strcmp(nom, "0")) return;
+
+	Classe cl = find_classe_with_nom(nom);
+
+	if(cl.code == 0){
+		printf("Incorrect cette classe n'existe pas. Entrer le nom de la classe ou 0 pour retourner : ");
+		goto GRAB_TO_;
+	}
+
+	if(class_appedd_to_matiere(cl, mat)){
+		printf("Impossible car la matiere a deja ete rajouter.\n");
+		return;
+	}
+	Faire f = {mat.reference, cl.code};
+	update_sefaire(f, 0);
+	printf("La relation a ete fiate avec succes.\n");
+}
+
+void disadd_matiere_to_classe(Matiere mat)
+{
+	char nom[31];
+	printf("Entrer le nom de la classe : ");
+	GRAB_TO_:
+	scanf("%s", nom);
+	fflush(stdin);
+
+	if(!strcmp(nom, "0")) return;
+
+	Classe cl = find_classe_with_nom(nom);
+
+	if(cl.code == 0){
+		printf("Incorrect cette classe n'existe pas. Entrer le nom de la classe ou 0 pour retourner : ");
+		goto GRAB_TO_;
+	}
+
+	if(!class_appedd_to_matiere(cl, mat)){
+		printf("Impossible car relation n'existe pas.\n");
+		return;
+	}
+	Faire f = {mat.reference, cl.code};
+	update_sefaire(f, 2);
+	printf("La dissociation a bien reussie.\n");
 }

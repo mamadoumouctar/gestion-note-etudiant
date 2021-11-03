@@ -5,8 +5,8 @@
 #include "../etudiants/etudiant.h"
 
 typedef struct Note{
-	unsigned int id_etudiant;
-	unsigned int id_matiere;
+	int id_etudiant;
+	int id_matiere;
 	float note_cc;
 	float note_ds;
 } Note;
@@ -26,9 +26,9 @@ void delate_note_etudiant_matier(Etudiant, Matiere);
 void delate_note_etudiant_classe(Classe, Matiere, Etudiant *);
 
 Note find_note(Etudiant, Matiere);
-Note find_note_with_primary(unsigned int, unsigned int);
+Note find_note_with_primary(int, int);
 void save_note(Note);
-void update_note(Note, unsigned int);
-unsigned int already_has_note(Etudiant, Matiere);
+void update_note(Note, int);
+int already_has_note(Etudiant, Matiere);
 
 #endif

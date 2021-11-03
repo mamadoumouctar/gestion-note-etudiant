@@ -4,7 +4,7 @@
 #include "etudiant.h"
 
 Etudiant new_etudiant(
-	unsigned int numero, char nom[31], char prenom[21], char email[21], Date naissance
+	int numero, char nom[31], char prenom[21], char email[21], Date naissance
 	)
 {
 	Etudiant et;
@@ -18,7 +18,7 @@ Etudiant new_etudiant(
 	return et;
 }
 
-Date new_date(unsigned short int jj, unsigned short int mm, unsigned int aaaa)
+Date new_date(int jj, int mm, int aaaa)
 {
 	Date date;
 	date.jj = jj;
@@ -66,10 +66,10 @@ Etudiant find_etudiant_with_email(char email[21])
 	return new_etudiant(0, "", "", "", date);
 }
 
-int find_etudiant_from_classe(unsigned int code_classe, Etudiant * etudiants)
+int find_etudiant_from_classe(int code_classe, Etudiant * etudiants)
 {
 	Etudiant et, null = {0, "", "", "", {0, 0, 0}};
-	unsigned short int index = 0, max = 10;
+	int index = 0, max = 10;
 
 	FILE *file = fopen("./data/etudiants.csv", "r");
 
@@ -87,7 +87,7 @@ int find_etudiant_from_classe(unsigned int code_classe, Etudiant * etudiants)
 		}
 	}while(!feof(file));
 
-	for(unsigned int i = index; i < max; i++){
+	for(int i = index; i < max; i++){
 		etudiants[i] = null;
 	}
 
@@ -127,7 +127,7 @@ void save_etudiant(Etudiant *et)
  * si edit_or_delate est 0 on supprime
  * si edit_or_delate est 1 on modifie
 */
-void update_etudiant(Etudiant update, unsigned short int edit_or_update)
+void update_etudiant(Etudiant update, int edit_or_update)
 {
 	FILE *file = NULL, *tmp = NULL;
 	Etudiant et;
