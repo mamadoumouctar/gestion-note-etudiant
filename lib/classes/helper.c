@@ -4,6 +4,7 @@
 #include "helper.h"
 #include "../etudiants/etudiant.h"
 #include "../appartenir.h"
+#include "../notes/matiere.h"
 
 int last = -1;
 
@@ -220,6 +221,10 @@ void delate_classe(char *name)
 	fflush(stdin);
 
 	if(rep == 'o' || rep == '0'){
+		if(linked_to_matieres(find.code)){
+			printf("Desole impossible de supprimer cette classe car elle a deja des matiers.\n");
+			return;
+		}
 		printf("La classe a bien ete supprimer.\n");
 		save_delated_classe(find);
 	}

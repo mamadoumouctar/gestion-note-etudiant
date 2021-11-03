@@ -151,6 +151,10 @@ void delate_matiere()
 
 	scanf("%s", chaine);
 	if(strcmp(chaine, "o") == 0 || strcmp(chaine, "O") == 0){
+		if(linked_to_classes(find.reference)){
+			printf("Desole impossible de supprimer une matiere qui n'est pas vide. Supprimer la relation avec les classes et reessayer.\n");
+			return;
+		}
 		update_matiere(find, 0);
 		printf("\nLa matiere a ete supprimer avec succes.\n");
 	}else{

@@ -4,6 +4,7 @@
 #include "helper.h"
 #include "etudiant.h"
 #include "../classes/classe.h"
+#include "../notes/etudiant.h"
 
 void view_etudiants()
 {
@@ -198,7 +199,7 @@ void delate_etudiant(char *mail)
 	}else{
 		find = find_etudiant_with_email(mail);
 		if(find.numero == 0){
-			printf("Desole cet etudiant n'existe pas\n");
+			printf("Desole cet etudiant n'existe pas.\n");
 			return;
 		}
 	}
@@ -208,6 +209,10 @@ void delate_etudiant(char *mail)
 	scanf("%20s", chaine);
 
 	if(strcmp(chaine, "o") == 0 || strcmp(chaine, "O") == 0){
+		if(linked_to_note(find.numero)){
+			printf("\nDesole impossible de supprimer un etudiant qui a deja une note.\n");
+			return;
+		}
 		update_etudiant(find, 0);
 		printf("\nL'etudiant a ete supprimer avec succes.\n");
 	}else{

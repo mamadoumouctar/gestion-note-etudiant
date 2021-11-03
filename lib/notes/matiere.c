@@ -200,6 +200,48 @@ unsigned int matiere_seFaire(unsigned int code_classe, unsigned int reference_ma
 	return 0;
 }
 
+unsigned int linked_to_classes(unsigned int reference)
+{
+	Faire f = {0, 0};
+	FILE *file = fopen("./data/sefaire.csv", "r");
+
+	if(file == NULL){
+		printf("L'ouverture du fichier a echoue.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	do{
+		fscanf(file, "%d,%d\n", &f.id_matiere, &f.id_classe);
+		if(f.id_matiere == reference){
+			fclose(file);
+			return 1;
+		}
+	}while(!feof(file));
+	fclose(file);
+	return 0;
+}
+
+unsigned int linked_to_matieres(unsigned int code)
+{
+	Faire f = {0, 0};
+	FILE *file = fopen("./data/sefaire.csv", "r");
+
+	if(file == NULL){
+		printf("L'ouverture du fichier a echoue.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	do{
+		fscanf(file, "%d,%d\n", &f.id_matiere, &f.id_classe);
+		if(f.id_classe == code){
+			fclose(file);
+			return 1;
+		}
+	}while(!feof(file));
+	fclose(file);
+	return 0;
+}
+
 /**
 * Fonction qui permet de modifier le fichier sefaire.csv
 * op = 0 insertion

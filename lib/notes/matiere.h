@@ -17,6 +17,8 @@ void call_controller_item(Etudiant, Matiere, unsigned int);
 void call_controller_collection(Classe, Matiere, unsigned int);
 
 unsigned int matiere_seFaire(unsigned int, unsigned int);
+unsigned int linked_to_classes(unsigned int);
+unsigned int linked_to_matieres(unsigned int);
 
 void update_sefaire(Faire, unsigned int);
 

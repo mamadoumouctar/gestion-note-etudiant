@@ -201,3 +201,24 @@ char *get_appreciation(unsigned int moyenne)
 	if(moyenne <= 20)
 		return "Excellent";
 }
+
+unsigned int linked_to_note(unsigned int numero)
+{
+	FILE *file = fopen("data/notes.csv", "r");
+	Note note;
+
+	if(file == NULL){
+		printf("L'ouverture du fichier a echoue.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	do{
+		fscanf(file, "%d,%d,%f,%f\n", &note.id_etudiant, &note.id_matiere, &note.note_cc, &note.note_ds);
+		if(note.id_etudiant == numero){
+			fclose(file);
+			return 1;
+		}
+	}while(!feof(file));
+	fclose(file);
+	return 0;
+}

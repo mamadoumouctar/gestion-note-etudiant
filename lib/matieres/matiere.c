@@ -161,8 +161,11 @@ Matiere get_one_matiere_with(char *libelle)
 
 	find_matieres(libelle, matieres);
 
-	if(index == 1)
-		return matieres[0];
+	if(index == 1){
+		mat = matieres[0];
+		free(matieres);
+		return mat;
+	}
 	else if(index == 0){
 		Matiere null = {0, "", 0};
 		return null;
